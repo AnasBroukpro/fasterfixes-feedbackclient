@@ -1,7 +1,7 @@
 const limitations = [
   {
-    title: "Per-seat pricing adds up fast",
-    body: "Usersnap's Startup plan starts at ~$69/mo for up to 15 seats. As your team grows, costs scale with headcount. FasterFixes charges a flat $20/mo for the Pro plan (up to 5 members) and $99/mo for Agency with unlimited members. Headcount stops being a pricing variable.",
+    title: "Pricing scales with headcount",
+    body: "Usersnap is tiered by seat count: Starter $49/mo (5 seats), Growth $109/mo (10 seats), Professional $199/mo (20 seats), Premium from $319/mo (50 seats). Hire one more person at the wrong moment and your bill jumps to the next tier. FasterFixes charges a flat $20/mo for Pro (up to 5 members) and $99/mo for Agency with unlimited members. Headcount stops being a pricing variable.",
   },
   {
     title: "No self-hosting option",

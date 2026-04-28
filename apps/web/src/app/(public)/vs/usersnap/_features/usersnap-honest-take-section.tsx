@@ -92,9 +92,10 @@ export function UsersnapHonestTakeSection() {
             </li>
             <li>
               <strong className="text-foreground">Flat pricing</strong> —
-              $20/month for a 5-person team versus ~$69/month on Usersnap Startup.
-              The free plan covers 1 project, 50 feedback items, and 1 member at
-              no cost.
+              $20/month for a 5-person team versus $49/month on Usersnap Starter
+              ($39/month billed annually). The free plan covers 1 project, 50
+              feedback items, and 1 member at no cost — Usersnap offers a trial
+              capped at 20 feedback items, not a permanent free tier.
             </li>
           </ul>
           <p>

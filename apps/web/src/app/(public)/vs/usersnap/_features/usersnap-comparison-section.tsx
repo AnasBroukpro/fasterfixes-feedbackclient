@@ -22,14 +22,14 @@ const rows: { label: string; cells: [Cell, Cell] }[] = [
     label: "Pricing model",
     cells: [
       "Flat per-workspace · free, $20/mo, $99/mo",
-      "Per-seat tiers · ~$69/mo Startup, ~$249/mo Company",
+      "Tiered by seat count · $49/mo Starter to $319/mo Premium",
     ],
   },
   {
     label: "Cost for a 5-person team",
     cells: [
       "$0 self-host · $20/mo hosted Pro",
-      "~$69/mo Startup (15 seats included)",
+      "$49/mo Starter (5 seats, $39/mo billed annually)",
     ],
   },
   {
@@ -109,7 +109,7 @@ const rows: { label: string; cells: [Cell, Cell] }[] = [
     label: "Free plan",
     cells: [
       { type: "yes", note: "1 project · 50 items · forever" },
-      { type: "partial", note: "Trial only · no permanent free plan" },
+      { type: "partial", note: "Trial only · 20 feedback items" },
     ],
   },
 ];
@@ -198,7 +198,7 @@ export function UsersnapComparisonSection() {
 
         <p className="text-muted-foreground mx-auto mt-8 max-w-2xl text-center text-sm">
           Pricing and feature availability as publicly listed on each
-          vendor&apos;s website. Last updated April 27, 2026.
+          vendor&apos;s website. Last updated April 28, 2026.
         </p>
       </div>
     </section>

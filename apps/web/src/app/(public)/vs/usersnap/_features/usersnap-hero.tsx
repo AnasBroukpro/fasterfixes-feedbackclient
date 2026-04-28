@@ -21,7 +21,7 @@ export function UsersnapHero() {
             FasterFixes is self-hostable, AGPL-3.0 licensed, and ships an MCP
             server so AI coding agents read and fix client feedback directly
             from the terminal. Usersnap is a mature product feedback platform —
-            closed-source, cloud-only, and priced per seat.
+            closed-source, cloud-only, and tiered by seat count.
           </p>
 
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">

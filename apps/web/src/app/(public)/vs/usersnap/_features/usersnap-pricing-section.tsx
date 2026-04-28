@@ -29,11 +29,11 @@ const cards: {
     note: "Flat rate. Agency tier unlocks unlimited members at $99/month. No per-seat charges as your team grows.",
   },
   {
-    vendor: "Usersnap · Company",
+    vendor: "Usersnap · Professional",
     plan: "Cloud-only, closed source",
-    price: "~$249",
+    price: "$199",
     suffix: "/ month",
-    note: "Per-seat pricing model. Includes NPS, microsurveys, feature boards, Jira/Slack/GitHub integrations, and custom branding. Startup plan starts at ~$69/mo.",
+    note: "Tiered by seat count: 20 seats, 1M page views, NPS surveys, feature boards, Jira/Slack/GitHub integrations. Starter starts at $49/mo for 5 seats; Premium from $319/mo.",
   },
 ];
 
@@ -52,8 +52,10 @@ export function UsersnapPricingSection() {
             FasterFixes is open source. The lowest plan in any honest
             comparison is &quot;free, forever, on your own server.&quot; If you
             would rather not run it yourself, the hosted plans are flat-rate —
-            not per-seat. Usersnap uses per-seat tier pricing where the Startup
-            plan starts at ~$69/month and the Company plan at ~$249/month.
+            not tiered by team size. Usersnap is tiered by seat count: Starter
+            $49/mo (5 seats), Growth $109/mo (10 seats), Professional $199/mo
+            (20 seats), Premium from $319/mo (50 seats). Annual billing brings
+            the first three tiers to $39, $89, and $159/mo.
           </p>
         </div>
 
@@ -97,39 +99,6 @@ export function UsersnapPricingSection() {
               Self-host from GitHub
             </a>
           </Button>
-        </div>
-
-        <div className="mx-auto mt-12 max-w-3xl rounded-xl border p-7">
-          <p className="text-muted-foreground text-sm font-semibold tracking-wider uppercase">
-            Worked example
-          </p>
-          <p className="mt-2 text-lg font-semibold">
-            5-person dev agency, 3 active client projects
-          </p>
-          <ul className="text-muted-foreground mt-4 space-y-2 text-sm leading-relaxed">
-            <li>
-              <span className="text-foreground font-medium">
-                Usersnap Company:
-              </span>{" "}
-              ~$249/mo × 12 = ~$2,988/year
-            </li>
-            <li>
-              <span className="text-foreground font-medium">
-                FasterFixes Agency:
-              </span>{" "}
-              $99/mo × 12 = $1,188/year
-            </li>
-            <li>
-              <span className="text-foreground font-medium">
-                FasterFixes self-hosted:
-              </span>{" "}
-              $0/year (infrastructure costs only)
-            </li>
-          </ul>
-          <p className="mt-4 text-sm">
-            Annual savings: <strong>$1,800 to $2,988</strong> depending on
-            deployment.
-          </p>
         </div>
 
         <p className="text-muted-foreground mx-auto mt-8 max-w-2xl text-center text-sm">
