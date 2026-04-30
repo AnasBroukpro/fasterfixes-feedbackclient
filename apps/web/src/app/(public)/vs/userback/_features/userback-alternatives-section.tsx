@@ -41,6 +41,13 @@ const alternatives: Alternative[] = [
     href: "/vs/usersnap" as Route,
   },
   {
+    name: "Atarim",
+    bestFor: "Web agencies running WordPress client review cycles",
+    startingPrice: "$25/seat/mo",
+    openSource: { type: "no" },
+    href: "/vs/atarim" as Route,
+  },
+  {
     name: "Gleap",
     bestFor: "SaaS products combining in-app support and feedback",
     startingPrice: "$49/mo",

@@ -21,6 +21,7 @@ import {
 } from "./_features/marker-io-migration-section";
 import { MarkerIoPricingSection } from "./_features/marker-io-pricing-section";
 import { MarkerIoWhySwitchSection } from "./_features/marker-io-why-switch-section";
+import { VsCrossLinks } from "../_features/vs-cross-links";
 
 const pageUrl = `${APP_URL}/vs/marker-io`;
 const title = `Marker.io alternative · Open-source feedback widget · ${SITE_NAME}`;
@@ -74,6 +75,7 @@ export default function Page() {
       <MarkerIoMigrationSection />
       <MarkerIoFaqSection />
       <MarkerIoCtaSection />
+      <VsCrossLinks currentSlug="marker-io" />
 
       <WebPageSchema
         title={title}

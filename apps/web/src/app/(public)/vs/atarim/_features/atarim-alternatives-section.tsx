@@ -45,6 +45,14 @@ const alternatives: Alternative[] = [
     href: "/vs/usersnap" as Route,
   },
   {
+    name: "Userback",
+    bestFor:
+      "Product teams needing session replay, NPS, and feature portals",
+    startingPrice: "$19/seat/mo",
+    openSource: { type: "no" },
+    href: "/vs/userback" as Route,
+  },
+  {
     name: "Gleap",
     bestFor:
       "SaaS teams needing all-in-one bug reporting, live chat, session replay, and roadmap",

@@ -26,6 +26,7 @@ import {
 import { AtarimPricingSection } from "./_features/atarim-pricing-section";
 import { AtarimWhatIsSection } from "./_features/atarim-what-is-section";
 import { AtarimWhySwitchSection } from "./_features/atarim-why-switch-section";
+import { VsCrossLinks } from "../_features/vs-cross-links";
 
 const pageUrl = `${APP_URL}/vs/atarim`;
 const title = `Atarim Alternative — Open-Source & Self-Hosted | ${SITE_NAME}`;
@@ -83,6 +84,7 @@ export default function Page() {
       <AtarimMigrationSection />
       <AtarimFaqSection />
       <AtarimCtaSection />
+      <VsCrossLinks currentSlug="atarim" />
 
       <SoftwareApplicationSchema />
 

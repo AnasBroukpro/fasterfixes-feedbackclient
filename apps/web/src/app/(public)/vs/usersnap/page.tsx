@@ -25,6 +25,7 @@ import {
 } from "./_features/usersnap-migration-section";
 import { UsersnapPricingSection } from "./_features/usersnap-pricing-section";
 import { UsersnapWhySwitchSection } from "./_features/usersnap-why-switch-section";
+import { VsCrossLinks } from "../_features/vs-cross-links";
 
 const pageUrl = `${APP_URL}/vs/usersnap`;
 const title = `Usersnap Alternative — Open-Source & Self-Hosted | ${SITE_NAME}`;
@@ -81,6 +82,7 @@ export default function Page() {
       <UsersnapMigrationSection />
       <UsersnapFaqSection />
       <UsersnapCtaSection />
+      <VsCrossLinks currentSlug="usersnap" />
 
       <SoftwareApplicationSchema />
 

@@ -21,6 +21,7 @@ import {
 } from "./_features/bugherd-migration-section";
 import { BugherdPricingSection } from "./_features/bugherd-pricing-section";
 import { BugherdWhySwitchSection } from "./_features/bugherd-why-switch-section";
+import { VsCrossLinks } from "../_features/vs-cross-links";
 
 const pageUrl = `${APP_URL}/vs/bugherd`;
 const title = `BugHerd alternative · Open-source feedback widget · ${SITE_NAME}`;
@@ -72,6 +73,7 @@ export default function Page() {
       <BugherdMigrationSection />
       <BugherdFaqSection />
       <BugherdCtaSection />
+      <VsCrossLinks currentSlug="bugherd" />
 
       <WebPageSchema
         title={title}

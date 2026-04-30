@@ -26,6 +26,7 @@ import {
 import { UserbackPricingSection } from "./_features/userback-pricing-section";
 import { UserbackWhatIsSection } from "./_features/userback-what-is-section";
 import { UserbackWhySwitchSection } from "./_features/userback-why-switch-section";
+import { VsCrossLinks } from "../_features/vs-cross-links";
 
 const pageUrl = `${APP_URL}/vs/userback`;
 const title = `Userback Alternative — Open-Source & Self-Hosted | ${SITE_NAME}`;
@@ -83,6 +84,7 @@ export default function Page() {
       <UserbackMigrationSection />
       <UserbackFaqSection />
       <UserbackCtaSection />
+      <VsCrossLinks currentSlug="userback" />
 
       <SoftwareApplicationSchema />
 
