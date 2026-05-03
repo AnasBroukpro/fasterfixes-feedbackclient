@@ -26,10 +26,12 @@ export function HeroSection() {
               fix. No more messy revision rounds.
             </p>
 
-            <CopyCommand command="npm install @fasterfixes/react" />
+            <div data-demo-pin-target="hero-install">
+              <CopyCommand command="npm install @fasterfixes/react" />
+            </div>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <Button asChild size="lg">
+              <Button asChild size="lg" data-demo-pin-target="hero-cta">
                 <Link href={signupUrl}>
                   Get Started Free
                   <ArrowRightIcon />

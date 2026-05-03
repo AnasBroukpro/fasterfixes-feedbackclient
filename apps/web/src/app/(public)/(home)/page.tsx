@@ -18,6 +18,7 @@ import { HeroSection } from "./_features/hero/hero-section";
 import { HowItWorksSection } from "./_features/how-it-works/how-it-works-section";
 import { ProblemSection } from "./_features/problem/problem-section";
 import { SolutionSection } from "./_features/solution/solution-section";
+import { DemoFeedbackProvider } from "./_features/widget-demo/demo-feedback-provider.client";
 
 export const metadata: Metadata = {
   title: {
@@ -56,20 +57,22 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <div>
-      <HeroSection />
-      <HowItWorksSection />
-      <ProblemSection />
-      <SolutionSection />
-      <BeforeAfterSection />
-      <FaqSection />
-      <FinalCtaSection />
-      <ComparisonsSection />
+    <DemoFeedbackProvider>
+      <div>
+        <HeroSection />
+        <HowItWorksSection />
+        <ProblemSection />
+        <SolutionSection />
+        <BeforeAfterSection />
+        <FaqSection />
+        <FinalCtaSection />
+        <ComparisonsSection />
 
-      <FaqSchema faqs={faqs} />
-      <OrganizationSchema />
-      <WebSiteSchema />
-      <SoftwareApplicationSchema />
-    </div>
+        <FaqSchema faqs={faqs} />
+        <OrganizationSchema />
+        <WebSiteSchema />
+        <SoftwareApplicationSchema />
+      </div>
+    </DemoFeedbackProvider>
   );
 }
