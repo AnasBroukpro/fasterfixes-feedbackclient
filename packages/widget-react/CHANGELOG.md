@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.0.7
+
+### Added
+- `@fasterfixes/react/internal` subpath export exposing `FeedbackProviderCore`. Marked `@unstable` (no semver guarantees). Lets advanced integrators wire a custom `FeedbackClient` (from `@fasterfixes/core`) into the widget without using a real reviewer token or backend — useful for offline development, e2e tests, and embedded demos.
+
+### Changed
+- Internally split `FeedbackProvider` into a public init wrapper (resolves reviewer token + config) and `FeedbackProviderCore` (renders the widget given pre-resolved values). No change to the public `FeedbackProvider` API.
+- Core defers portal mounting until after hydration to keep direct Core consumers SSR-safe.
+
+## 0.0.6
+
+### Fixed
+- Feedback pin stability: pins now anchor to either the document or the viewport depending on whether the targeted element scrolls with the page, so they no longer drift, disappear, or jump when the user scrolls. Pin positioning logic extracted to shared utilities (`getPinAnchor`, `getPinPlacementMetadata`, `getViewportAnchoringKind`).
+- Floating button interaction polish across modes (large internal refactor of the button, pin popover, and comment popover).
+
+## 0.0.5
+
+### Changed
+- Screenshots upload in the background after feedback submission instead of blocking the submit. Visitors see "submitted" immediately; the screenshot is attached via a follow-up `attachScreenshot` call. Reduces perceived latency on slow connections.
+
+## 0.0.4
+
+### Changed
+- Default API origin updated to `https://www.faster-fixes.com` (canonical host). Existing consumers passing an explicit `apiOrigin` are unaffected.
+
 ## 0.0.3
 
 ### Added
