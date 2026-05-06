@@ -23,7 +23,6 @@ const PRIVATE_ROUTES = [
   "/admin/",
   "/account/",
   "/organization/",
-  "/integrations",
   "/onboarding",
   "/inbox",
   "/reviewers",
