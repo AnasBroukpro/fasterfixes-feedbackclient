@@ -83,9 +83,16 @@ const rows: { label: string; cells: [Cell, Cell] }[] = [
     cells: [{ type: "yes", note: "Bidirectional" }, { type: "yes" }],
   },
   {
+    label: "Linear two-way sync",
+    cells: [
+      { type: "yes", note: "Bidirectional · workflow-state aware" },
+      { type: "yes" },
+    ],
+  },
+  {
     label: "Project management integrations",
     cells: [
-      "GitHub today · more coming",
+      "GitHub + Linear · more coming",
       "Jira, Asana, ClickUp, Monday.com, Linear, +",
     ],
   },
@@ -184,7 +191,7 @@ export function BugherdComparisonSection() {
 
         <p className="text-muted-foreground mx-auto mt-8 max-w-2xl text-center text-sm">
           Pricing and feature availability as publicly listed on each
-          vendor&apos;s website. Last updated April 25, 2026.
+          vendor&apos;s website. Last updated May 12, 2026.
         </p>
       </div>
     </section>

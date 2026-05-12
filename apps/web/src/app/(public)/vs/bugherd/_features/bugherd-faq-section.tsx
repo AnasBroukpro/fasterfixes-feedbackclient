@@ -162,17 +162,23 @@ export const bugherdFaqs: RichFaqItem[] = [
       "BugHerd supports CSV, XML, and JSON exports from all plans. Hand the export to your AI agent: the @fasterfixes/mcp create_feedbacks tool bulk-imports the items into FasterFixes, preserving original timestamps and attributing them to a named reviewer.",
   },
   {
-    question: "Does FasterFixes integrate with GitHub like BugHerd does?",
+    question: "Does FasterFixes integrate with GitHub and Linear like BugHerd does?",
     answer:
-      "Yes. The GitHub integration creates an issue from each feedback item with the full structured report — screenshot, component path, selector, environment — and syncs status both ways. Closing an issue on GitHub resolves the feedback in FasterFixes, and vice versa.",
+      "Yes. The GitHub and Linear integrations each create an issue from a feedback item with the full structured report — screenshot, component path, selector, environment — and sync status both ways. Closing the issue on GitHub or moving it to Done in Linear resolves the feedback in FasterFixes, and vice versa. A feedback can be linked to both at once.",
     content: (
       <p className="text-muted-foreground text-lg md:text-xl">
-        Yes. The GitHub integration creates an issue from each feedback item
-        with the full structured report — screenshot, component path, selector,
-        environment — and syncs status both ways. Closing an issue on GitHub
-        resolves the feedback in FasterFixes, and vice versa. See the{" "}
+        Yes. The GitHub and Linear integrations each create an issue from a
+        feedback item with the full structured report — screenshot, component
+        path, selector, environment — and sync status both ways. Closing the
+        issue on GitHub or moving it to Done in Linear resolves the feedback in
+        FasterFixes, and vice versa. A feedback can be linked to both at once.
+        See the{" "}
         <DocLink href={"/docs/integrations/github" as Route}>
           GitHub integration docs
+        </DocLink>{" "}
+        and{" "}
+        <DocLink href={"/docs/integrations/linear" as Route}>
+          Linear integration docs
         </DocLink>
         .
       </p>

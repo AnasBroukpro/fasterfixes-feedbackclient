@@ -93,7 +93,7 @@ const rows: { label: string; cells: [Cell, Cell] }[] = [
   {
     label: "Jira sync",
     cells: [
-      { type: "no", note: "GitHub today" },
+      { type: "no", note: "GitHub & Linear today" },
       { type: "partial", note: "Team plan and above" },
     ],
   },
@@ -102,9 +102,16 @@ const rows: { label: string; cells: [Cell, Cell] }[] = [
     cells: [{ type: "yes", note: "Bidirectional" }, { type: "yes" }],
   },
   {
+    label: "Linear two-way sync",
+    cells: [
+      { type: "yes", note: "Bidirectional · workflow-state aware" },
+      { type: "yes", note: "Team plan and above" },
+    ],
+  },
+  {
     label: "Project management integrations",
     cells: [
-      "GitHub today · more coming",
+      "GitHub + Linear · more coming",
       "Jira, Linear, Asana, ClickUp, Trello, Monday.com, +",
     ],
   },
@@ -215,7 +222,7 @@ export function MarkerIoComparisonSection() {
 
         <p className="text-muted-foreground mx-auto mt-8 max-w-2xl text-center text-sm">
           Pricing and feature availability as publicly listed on each
-          vendor&apos;s website. Last updated April 26, 2026.
+          vendor&apos;s website. Last updated May 12, 2026.
         </p>
       </div>
     </section>

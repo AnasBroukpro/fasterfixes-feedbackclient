@@ -9,7 +9,7 @@ export const migrationSteps = [
   },
   {
     label: "Import active feedback via the MCP",
-    body: "Connect @fasterfixes/mcp to your AI agent and point it at the Marker.io CSV. The agent parses the file and calls the create_feedbacks tool to bulk-import items — up to 100 per call, with original timestamps preserved and attributed to a named reviewer. The import skips integration fan-out, so migrated items do not open GitHub issues.",
+    body: "Connect @fasterfixes/mcp to your AI agent and point it at the Marker.io CSV. The agent parses the file and calls the create_feedbacks tool to bulk-import items — up to 100 per call, with original timestamps preserved and attributed to a named reviewer. The import skips integration fan-out, so migrated items do not open GitHub issues or Linear tickets.",
   },
   {
     label: "Know what you give up",

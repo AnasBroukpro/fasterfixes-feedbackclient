@@ -58,6 +58,13 @@ const rows: { label: string; cells: [Cell, Cell] }[] = [
       { type: "no" },
     ],
   },
+  {
+    label: "Issue tracker sync",
+    cells: [
+      { type: "yes", note: "GitHub + Linear · two-way, workflow-state aware" },
+      { type: "yes", note: "Jira, Linear, GitHub, Asana, ClickUp, +" },
+    ],
+  },
 ];
 
 const headers = ["FasterFixes", "Gleap"] as const;

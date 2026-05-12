@@ -12,8 +12,8 @@ export const migrationSteps = [
     body: "Run npm install @fasterfixes/react and drop the FasterFixes component into your app layout. Remove the Atarim JS snippet from your site, deactivate the WordPress plugin, or stop using the Chrome extension for new feedback. The widget captures component tree, DOM selector, URL, browser, and viewport automatically.",
   },
   {
-    label: "Invite your team and connect GitHub",
-    body: "Add team members from the dashboard — your plan covers the full team at a flat rate. Connect your GitHub repository for two-way issue sync. Configure @fasterfixes/mcp in your IDE or terminal to give your coding agent direct access to incoming feedback.",
+    label: "Invite your team and connect your issue tracker",
+    body: "Add team members from the dashboard — your plan covers the full team at a flat rate. Connect your GitHub repository, your Linear workspace, or both, for two-way issue sync. Configure @fasterfixes/mcp in your IDE or terminal to give your coding agent direct access to incoming feedback.",
   },
 ];
 

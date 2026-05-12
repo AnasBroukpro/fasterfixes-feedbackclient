@@ -45,7 +45,7 @@ export function MarkerIoHonestTakeSection() {
               </strong>{" "}
               — Jira, Linear, Asana, ClickUp, Trello, Monday.com, Notion,
               Basecamp, Wrike, Shortcut, and more. FasterFixes ships GitHub
-              two-way sync; more integrations are in progress.
+              and Linear two-way sync; more integrations are in progress.
             </li>
             <li>
               <strong className="text-foreground">Guest Portal</strong> —

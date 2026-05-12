@@ -91,8 +91,15 @@ const rows: { label: string; cells: [Cell, Cell] }[] = [
   {
     label: "Project management integrations",
     cells: [
-      "GitHub today · more coming",
+      "GitHub + Linear · more coming",
       "Jira, ClickUp (2-way sync), Zapier, +",
+    ],
+  },
+  {
+    label: "Linear two-way sync",
+    cells: [
+      { type: "yes", note: "Bidirectional · workflow-state aware" },
+      { type: "no" },
     ],
   },
   {
@@ -202,7 +209,7 @@ export function UserbackComparisonSection() {
 
         <p className="text-muted-foreground mx-auto mt-8 max-w-2xl text-center text-sm">
           Pricing and feature availability as publicly listed on each
-          vendor&apos;s website. Last updated April 29, 2026.
+          vendor&apos;s website. Last updated May 12, 2026.
         </p>
       </div>
     </section>

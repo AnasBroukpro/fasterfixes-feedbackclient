@@ -12,8 +12,8 @@ export const migrationSteps = [
     body: "Remove the Usersnap script from your codebase. Install the FasterFixes React widget (npm install @fasterfixes/react) and drop the component into your layout, or use the HTML embed for non-React pages. Generate a shareable link for each client — no client account required.",
   },
   {
-    label: "Invite your team and connect GitHub",
-    body: "Add team members from the dashboard and connect your GitHub repository for two-way issue sync. Configure @fasterfixes/mcp in your IDE or terminal to give your coding agent direct access to incoming feedback.",
+    label: "Invite your team and connect your issue tracker",
+    body: "Add team members from the dashboard and connect your GitHub repository, your Linear workspace, or both, for two-way issue sync. Configure @fasterfixes/mcp in your IDE or terminal to give your coding agent direct access to incoming feedback.",
   },
 ];
 

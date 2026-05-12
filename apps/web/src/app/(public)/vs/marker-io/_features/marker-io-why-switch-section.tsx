@@ -9,11 +9,11 @@ const limitations = [
   },
   {
     title: "Key features locked behind the $149/month tier",
-    body: "On Marker.io Starter ($39/month annual), you do not get Jira sync, session replay, devtools (console and network logs), or custom branding. Those require Team at $149/month annual — a 3.8× jump. FasterFixes does not gate developer-relevant features by tier: GitHub two-way sync, React component tree capture, and MCP access are available on every plan, including the free one.",
+    body: "On Marker.io Starter ($39/month annual), you do not get Jira sync, session replay, devtools (console and network logs), or custom branding. Those require Team at $149/month annual — a 3.8× jump. FasterFixes does not gate developer-relevant features by tier: GitHub and Linear two-way sync, React component tree capture, and MCP access are available on every plan, including the free one.",
   },
   {
     title: "Built for QA reviewers, not the developer fixing the bug",
-    body: "Marker.io's workflow is optimized for project managers and QA — feedback lands in a dashboard, gets triaged, and eventually reaches a developer as a ticket. There is no path from client annotation to the editor or terminal. FasterFixes routes feedback to where developers work: GitHub issues via two-way sync, or the terminal via @fasterfixes/mcp, where Claude Code, Cursor, or Codex can read the report and open a fix without leaving the editor.",
+    body: "Marker.io's workflow is optimized for project managers and QA — feedback lands in a dashboard, gets triaged, and eventually reaches a developer as a ticket. There is no path from client annotation to the editor or terminal. FasterFixes routes feedback to where developers work: GitHub issues or Linear tickets via two-way sync, or the terminal via @fasterfixes/mcp, where Claude Code, Cursor, or Codex can read the report and open a fix without leaving the editor.",
   },
 ];
 

@@ -42,7 +42,8 @@ export function UsersnapHonestTakeSection() {
             <li>
               <strong className="text-foreground">Integration breadth</strong> —
               Jira, Slack, Zendesk, Azure DevOps, and 50+ other tools. FasterFixes
-              ships GitHub two-way sync; more integrations are in progress.
+              ships GitHub and Linear two-way sync; more integrations are in
+              progress.
             </li>
             <li>
               <strong className="text-foreground">Any-stack support</strong> —
