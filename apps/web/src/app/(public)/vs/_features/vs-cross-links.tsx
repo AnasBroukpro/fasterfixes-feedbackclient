@@ -6,6 +6,7 @@ type VsSlug =
   | "bugherd"
   | "gleap"
   | "marker-io"
+  | "markup-io"
   | "ruttl"
   | "userback"
   | "usersnap";
@@ -18,6 +19,7 @@ const allComparisons: { slug: VsSlug; label: string; href: Route }[] = [
   { slug: "atarim", label: "Atarim alternative", href: "/vs/atarim" as Route },
   { slug: "gleap", label: "Gleap alternative", href: "/vs/gleap" as Route },
   { slug: "ruttl", label: "Ruttl alternative", href: "/vs/ruttl" as Route },
+  { slug: "markup-io", label: "Markup.io alternative", href: "/vs/markup-io" as Route },
 ];
 
 type VsCrossLinksProps = {

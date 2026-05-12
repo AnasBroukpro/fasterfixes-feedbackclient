@@ -62,6 +62,13 @@ const alternatives: Alternative[] = [
     href: "/vs/ruttl" as Route,
   },
   {
+    name: "Markup.io",
+    bestFor: "Design review across PDFs, images, and live URLs",
+    startingPrice: "$79/mo",
+    openSource: { type: "no" },
+    href: "/vs/markup-io" as Route,
+  },
+  {
     name: "Feedbucket",
     bestFor: "Small agencies wanting a simple hosted widget",
     startingPrice: "$29/mo",

@@ -46,6 +46,12 @@ const comparisons: Comparison[] = [
     description:
       "Per-seat visual feedback with a Chrome-extension requirement.",
   },
+  {
+    label: "Markup.io alternative",
+    href: "/vs/markup-io" as Route,
+    description:
+      "Design review tool that hiked prices 172% and removed its free plan.",
+  },
 ];
 
 export function ComparisonsSection() {
