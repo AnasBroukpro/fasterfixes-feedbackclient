@@ -15,7 +15,7 @@ const alternatives: Alternative[] = [
   {
     name: "FasterFixes",
     bestFor:
-      "Dev agencies building React/Next.js apps; self-hosted feedback with MCP + GitHub sync",
+      "Dev agencies building React/Next.js apps; self-hosted feedback with MCP + GitHub & Linear sync",
     startingPrice: "Free (self-hosted)",
     openSource: { type: "yes", note: "AGPL-3.0 + MIT" },
     highlight: true,
@@ -59,6 +59,14 @@ const alternatives: Alternative[] = [
     startingPrice: "$39/mo",
     openSource: { type: "no" },
     href: "/vs/gleap" as Route,
+  },
+  {
+    name: "Ruttl",
+    bestFor:
+      "Designers and clients reviewing live web pages with on-page annotations",
+    startingPrice: "$18/user/mo",
+    openSource: { type: "no" },
+    href: "/vs/ruttl" as Route,
   },
   {
     name: "Feedbucket",

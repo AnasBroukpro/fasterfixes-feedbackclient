@@ -25,6 +25,7 @@ const alternativesLinks: { text: string; href: Route }[] = [
   { text: "Userback alternative", href: "/vs/userback" as Route },
   { text: "Atarim alternative", href: "/vs/atarim" as Route },
   { text: "Gleap alternative", href: "/vs/gleap" as Route },
+  { text: "Ruttl alternative", href: "/vs/ruttl" as Route },
 ];
 
 const legalLinks = [

@@ -55,6 +55,13 @@ const alternatives: Alternative[] = [
     href: "/vs/gleap" as Route,
   },
   {
+    name: "Ruttl",
+    bestFor: "Designers reviewing live web pages with on-page annotations",
+    startingPrice: "$18/user/mo",
+    openSource: { type: "no" },
+    href: "/vs/ruttl" as Route,
+  },
+  {
     name: "Feedbucket",
     bestFor: "Small agencies wanting a simple hosted widget",
     startingPrice: "$29/mo",

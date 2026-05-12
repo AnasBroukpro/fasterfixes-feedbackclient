@@ -40,6 +40,12 @@ const comparisons: Comparison[] = [
     description:
       "All-in-one customer support platform with an AI chatbot.",
   },
+  {
+    label: "Ruttl alternative",
+    href: "/vs/ruttl" as Route,
+    description:
+      "Per-seat visual feedback with a Chrome-extension requirement.",
+  },
 ];
 
 export function ComparisonsSection() {
