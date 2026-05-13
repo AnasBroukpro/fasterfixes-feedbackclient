@@ -53,10 +53,7 @@ export function HeroSection() {
           </div>
 
           {/* Right column: flow animation */}
-          <div className="flex flex-col gap-8">
-            <span className="text-muted-foreground font-mono text-sm">
-              {"// The new feedback pipeline:"}
-            </span>
+          <div className="flex flex-col">
             <HeroFlowAnimation />
           </div>
         </div>
