@@ -31,25 +31,24 @@ case "$COLOR" in
 esac
 
 # Function to get color based on usage percentage
+# Gradient: solid green up to 50%, then ramps yellow -> orange -> red.
 get_usage_color() {
-    local pct="$1"
-    pct="${pct%"%"}"  # Remove % if present
-    if [[ ! "$pct" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+    local pct="${1%"%"}"
+    pct="${pct%%.*}"  # Truncate decimals -> integer
+    if [[ ! "$pct" =~ ^[0-9]+$ ]]; then
         return
     fi
-    if (( $(echo "$pct < 15" | bc -l) )); then
+    if (( pct < 50 )); then
         COLOR_RESULT="$C_GREEN"
-    elif (( $(echo "$pct < 30" | bc -l) )); then
-        COLOR_RESULT="$C_LIME"
-    elif (( $(echo "$pct < 40" | bc -l) )); then
+    elif (( pct < 60 )); then
         COLOR_RESULT="$C_YELLOW_GREEN"
-    elif (( $(echo "$pct < 50" | bc -l) )); then
+    elif (( pct < 70 )); then
         COLOR_RESULT="$C_YELLOW"
-    elif (( $(echo "$pct < 60" | bc -l) )); then
+    elif (( pct < 80 )); then
         COLOR_RESULT="$C_GOLD"
-    elif (( $(echo "$pct < 70" | bc -l) )); then
+    elif (( pct < 90 )); then
         COLOR_RESULT="$C_ORANGE"
-    elif (( $(echo "$pct < 85" | bc -l) )); then
+    elif (( pct < 95 )); then
         COLOR_RESULT="$C_RED_ORANGE"
     else
         COLOR_RESULT="$C_RED"
@@ -58,16 +57,18 @@ get_usage_color() {
 
 # Function to create a progress bar
 create_progress_bar() {
-    local pct="$1"
+    local pct="${1%"%"}"
     local color="$2"
     local width=20
 
-    pct="${pct%"%"}"  # Remove % if present
-    if [[ ! "$pct" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+    pct="${pct%%.*}"  # Truncate decimals -> integer
+    if [[ ! "$pct" =~ ^[0-9]+$ ]]; then
         pct=0
     fi
+    (( pct < 0 )) && pct=0
+    (( pct > 100 )) && pct=100
 
-    local filled=$(printf "%.0f" $(echo "$pct * $width / 100" | bc -l))
+    local filled=$(( pct * width / 100 ))
     local empty=$((width - filled))
 
     BAR_RESULT=""
@@ -114,7 +115,10 @@ if [[ -n "$transcript_path" && -f "$transcript_path" ]]; then
         else 0 end
     ' < "$transcript_path" 2>/dev/null)
 
-    if [[ -n "$context_length" && "$context_length" -gt 0 ]]; then
+    if [[ "$context_length" =~ ^[0-9]+$ && "$context_length" -gt 0 ]]; then
+        if [[ ! "$max_context" =~ ^[0-9]+$ || "$max_context" -le 0 ]]; then
+            max_context=200000
+        fi
         pct=$((context_length * 100 / max_context))
         [[ $pct -gt 100 ]] && pct=100
         context_pct="${pct}%"
@@ -164,7 +168,7 @@ if [[ "$session_usage" == "?" ]]; then
     # cSpell:enable
 
     if [[ -n "$token" ]]; then
-        usage_response=$(curl -s --max-time 2 \
+        usage_response=$(curl -s --max-time 2 --connect-timeout 1 \
             "https://api.anthropic.com/api/oauth/usage" \
             -H "Authorization: Bearer $token" \
             -H "anthropic-beta: oauth-2025-04-20" 2>/dev/null) || true
@@ -179,24 +183,24 @@ if [[ "$session_usage" == "?" ]]; then
             seven_day_reset=$(echo "$usage_response" | jq -r '.seven_day.resets_at // empty' 2>/dev/null)
 
             if [[ -n "$five_hour_util" ]]; then
-                session_usage="${five_hour_util}%"
+                session_usage="$(printf '%.0f' "$five_hour_util")%"
             fi
 
             if [[ -n "$seven_day_util" ]]; then
-                weekly_usage="${seven_day_util}%"
+                weekly_usage="$(printf '%.0f' "$seven_day_util")%"
             fi
 
             # Format reset times (Paris timezone)
             if [[ -n "$five_hour_reset" ]]; then
-                reset_epoch=$(date -f "%Y-%m-%dT%H:%M:%S" -d "${five_hour_reset:0:19}" "+%s" 2>/dev/null || \
-                             date -j -f "%Y-%m-%dT%H:%M:%S" "${five_hour_reset:0:19}" "+%s" 2>/dev/null)
+                reset_epoch=$(TZ=UTC date -f "%Y-%m-%dT%H:%M:%S" -d "${five_hour_reset:0:19}" "+%s" 2>/dev/null || \
+                             TZ=UTC date -j -f "%Y-%m-%dT%H:%M:%S" "${five_hour_reset:0:19}" "+%s" 2>/dev/null)
                 now=$(date +%s)
                 if [[ -n "$reset_epoch" ]] && [[ "$reset_epoch" =~ ^[0-9]+$ ]]; then
                     diff=$((reset_epoch - now))
                     if [[ $diff -gt 0 ]]; then
                         hours=$((diff / 3600))
                         minutes=$(((diff % 3600) / 60))
-                        # Get reset time in Paris timezone, 24h format (e.g., 15h)
+                        # Get reset time in Paris timezone, 24h format (e.g., 16h)
                         reset_time=$(TZ="Europe/Paris" date -j -f "%s" "$reset_epoch" "+%-Hh%M" 2>/dev/null)
                         session_reset="${reset_time} (in ${hours}h${minutes})"
                     fi
@@ -204,8 +208,8 @@ if [[ "$session_usage" == "?" ]]; then
             fi
 
             if [[ -n "$seven_day_reset" ]]; then
-                reset_epoch=$(date -f "%Y-%m-%dT%H:%M:%S" -d "${seven_day_reset:0:19}" "+%s" 2>/dev/null || \
-                             date -j -f "%Y-%m-%dT%H:%M:%S" "${seven_day_reset:0:19}" "+%s" 2>/dev/null)
+                reset_epoch=$(TZ=UTC date -f "%Y-%m-%dT%H:%M:%S" -d "${seven_day_reset:0:19}" "+%s" 2>/dev/null || \
+                             TZ=UTC date -j -f "%Y-%m-%dT%H:%M:%S" "${seven_day_reset:0:19}" "+%s" 2>/dev/null)
                 now=$(date +%s)
                 if [[ -n "$reset_epoch" ]] && [[ "$reset_epoch" =~ ^[0-9]+$ ]]; then
                     diff=$((reset_epoch - now))
@@ -219,9 +223,12 @@ if [[ "$session_usage" == "?" ]]; then
                 fi
             fi
 
-            # Cache the result
-            mkdir -p "$HOME/.cache"
-            echo "${session_usage}|${session_reset}|${weekly_usage}|${weekly_reset}" > "$CACHE"
+            # Only cache when we got at least one real usage value, otherwise
+            # a transient API hiccup would poison the cache for the full TTL.
+            if [[ "$session_usage" != "?" || "$weekly_usage" != "?" ]]; then
+                mkdir -p "$HOME/.cache"
+                echo "${session_usage}|${session_reset}|${weekly_usage}|${weekly_reset}" > "$CACHE"
+            fi
         fi
     fi
 fi
@@ -247,10 +254,10 @@ if [[ "$session_usage" != "?" ]]; then
     create_progress_bar "$usage_num" "$usage_color"
     progress_bar="$BAR_RESULT"
 
-    line_5h="${C_GRAY}5h: ${progress_bar} ${usage_color}${session_usage}${C_GRAY}"
-    [[ "$session_reset" != "?" ]] && line_5h+=" ${session_reset}"
-    line_5h+="${C_RESET}"
-    printf '%s\n' "$line_5h"
+    line_cur="${C_GRAY}current: ${progress_bar} ${usage_color}${session_usage}${C_GRAY}"
+    [[ "$session_reset" != "?" ]] && line_cur+=" ${session_reset}"
+    line_cur+="${C_RESET}"
+    printf '%s\n' "$line_cur"
 fi
 
 # Line 3: 7-day window with progress bar
@@ -267,8 +274,8 @@ if [[ "$weekly_usage" != "?" ]]; then
     create_progress_bar "$usage_num" "$usage_color"
     progress_bar="$BAR_RESULT"
 
-    line_7d="${C_GRAY}7d: ${progress_bar} ${usage_color}${weekly_usage}${C_GRAY}"
-    [[ "$weekly_reset" != "?" ]] && line_7d+=" ${weekly_reset}"
-    line_7d+="${C_RESET}"
-    printf '%s\n' "$line_7d"
+    line_wk="${C_GRAY}weekly:  ${progress_bar} ${usage_color}${weekly_usage}${C_GRAY}"
+    [[ "$weekly_reset" != "?" ]] && line_wk+=" ${weekly_reset}"
+    line_wk+="${C_RESET}"
+    printf '%s\n' "$line_wk"
 fi
