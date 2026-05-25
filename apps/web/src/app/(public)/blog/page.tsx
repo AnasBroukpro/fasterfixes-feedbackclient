@@ -64,16 +64,12 @@ export default function BlogPage() {
                   href={`/blog/${slug}`}
                   className="group flex flex-col gap-4"
                 >
-                  {post.data.featuredImage ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={post.data.featuredImage}
-                      alt={post.data.featuredImageAlt ?? post.data.title}
-                      className="h-auto w-full border border-border transition-transform duration-300 group-hover:scale-[1.02]"
-                    />
-                  ) : (
-                    <div className="bg-muted aspect-video" />
-                  )}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`/blog/${slug}/og`}
+                    alt={post.data.title}
+                    className="h-auto w-full border border-border transition-transform duration-300 group-hover:scale-[1.02]"
+                  />
 
                   <div className="flex flex-col gap-2">
                     {post.data.tags && post.data.tags.length > 0 && (

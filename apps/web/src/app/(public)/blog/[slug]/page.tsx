@@ -1,10 +1,9 @@
 import { APP_URL } from "@/app/_constants/app";
 import { AUTHOR } from "@/app/_constants/author";
 import { SITE_NAME } from "@/app/_constants/seo";
-import { BreadcrumbSchema } from "@/app/_features/seo/breadcrumb-schema";
 import { MdxLink } from "@/app/_features/mdx/mdx-link";
+import { BreadcrumbSchema } from "@/app/_features/seo/breadcrumb-schema";
 import { blogSource } from "@/lib/blog/source";
-import { Separator } from "@workspace/ui/components/separator";
 import { getContentMDXComponents } from "mdx-components";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -40,6 +39,7 @@ export async function generateMetadata({
   const title = page.data.metaTitle ?? page.data.title;
   const description = page.data.metaDescription ?? page.data.description;
   const url = `${APP_URL}/blog/${slug}`;
+  const ogUrl = `${APP_URL}/blog/${slug}/og`;
 
   return {
     title,
@@ -54,16 +54,21 @@ export async function generateMetadata({
       publishedTime: page.data.date,
       modifiedTime: page.data.updatedAt ?? page.data.date,
       siteName: SITE_NAME,
-      ...(page.data.featuredImage && {
-        images: [
-          {
-            url: page.data.featuredImage,
-            alt: page.data.featuredImageAlt ?? page.data.title,
-          },
-        ],
-      }),
+      images: [
+        {
+          url: ogUrl,
+          width: 1200,
+          height: 630,
+          alt: page.data.title,
+        },
+      ],
     },
-    twitter: { title, description, card: "summary_large_image" },
+    twitter: {
+      title,
+      description,
+      card: "summary_large_image",
+      images: [ogUrl],
+    },
   };
 }
 
@@ -78,6 +83,7 @@ export default async function BlogPostPage({
 
   const MDX = page.data.body;
   const postUrl = `${APP_URL}/blog/${slug}`;
+  const ogUrl = `${APP_URL}/blog/${slug}/og`;
   const description = page.data.metaDescription ?? page.data.description ?? "";
 
   const blogPostingJsonLd: WithContext<BlogPosting> = {
@@ -88,6 +94,7 @@ export default async function BlogPostPage({
     url: postUrl,
     datePublished: page.data.date,
     dateModified: page.data.updatedAt ?? page.data.date,
+    image: ogUrl,
     author: {
       "@type": "Person",
       name: AUTHOR.name,
@@ -98,11 +105,6 @@ export default async function BlogPostPage({
       name: SITE_NAME,
       url: APP_URL,
     },
-    ...(page.data.featuredImage && {
-      image: page.data.featuredImage.startsWith("http")
-        ? page.data.featuredImage
-        : `${APP_URL}${page.data.featuredImage}`,
-    }),
   };
 
   return (
@@ -131,21 +133,18 @@ export default async function BlogPostPage({
           </time>
         </header>
 
-        {page.data.featuredImage && (
-          <Image
-            src={page.data.featuredImage}
-            alt={page.data.featuredImageAlt ?? page.data.title}
-            width={672}
-            height={378}
-            sizes="(max-width: 672px) 100vw, 672px"
-            className="mb-6 h-auto w-full rounded-lg"
-            priority
-          />
-        )}
+        <Image
+          src={`/blog/${slug}/og`}
+          alt={page.data.title}
+          width={1200}
+          height={630}
+          sizes="(max-width: 672px) 100vw, 672px"
+          className="mb-6 h-auto w-full rounded-lg"
+          unoptimized
+          priority
+        />
 
         <TableOfContents headings={page.data.toc} />
-
-        <Separator className="mb-12" />
 
         <div className="prose prose-xl dark:prose-invert max-w-none font-serif">
           <MDX components={getContentMDXComponents({ a: MdxLink })} />

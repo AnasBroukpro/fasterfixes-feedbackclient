@@ -25,8 +25,6 @@ export const blog = defineDocs({
       metaTitle: z.string().optional(),
       metaDescription: z.string().optional(),
       canonicalUrl: z.string().optional(),
-      featuredImage: z.string().optional(),
-      featuredImageAlt: z.string().optional(),
     }),
   },
 });
