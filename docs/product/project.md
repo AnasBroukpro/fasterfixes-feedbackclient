@@ -39,6 +39,7 @@ It provides:
    - Timestamp
 3. **A developer dashboard** where feedback is collected and organized.
 4. **Agent-ready markdown export** — each feedback item can be copied as a structured markdown bug report, ready to paste into an AI coding agent like Claude Code.
+5. **Issue tracker integrations** — feedback can sync to GitHub and Linear as issues, with bidirectional status sync (see Integrations below).
 
 The key idea is to transform:
 
@@ -73,6 +74,24 @@ Both workflows produce the same structured markdown report with sections for loc
 The goal is to reduce the gap between:
 
 > **client comment → AI agent retrieves and fixes → done**
+
+## Integrations
+
+Feedback can be connected to external issue trackers so it lives where teams already work. Both integrations support **bidirectional status sync** — a status change in Faster Fixes propagates to the linked issue, and closing/reopening the issue in the tracker updates the feedback. Faster Fixes is the canonical source of truth, and a change originating in one tracker is propagated to the other. Issue creation can be automatic (on feedback submission) or manual from the inbox. Created issues carry the full context (comment, page URL, selector, browser/OS info, viewport, screenshot link).
+
+### GitHub
+
+- **Auth**: GitHub App (installation-based), org-level.
+- **Faster Fixes → GitHub**: `resolved` closes the issue (`completed`), `closed` closes it (`not_planned`), `new`/`in_progress` reopens it.
+- **GitHub → Faster Fixes**: issue closed → `resolved`, issue reopened → `in_progress`.
+- Webhooks are HMAC-SHA256 verified; a short sync window (`lastSyncSource`/`lastSyncAt`) prevents echo loops.
+
+### Linear
+
+- **Auth**: OAuth 2.0, workspace-wide; issues are attributed to the app (survives member departures). Tokens stored encrypted (AES-256-GCM).
+- **Faster Fixes → Linear**: status maps to Linear state *types* (`completed`/`canceled`/`started`/`unstarted`), not names, so custom workflows work.
+- **Linear → Faster Fixes**: state type drives feedback status (`completed` → `resolved`, `canceled` → `closed`, `started` → `in_progress`, others → `new`).
+- Per-team default state, labels, and priority are configurable, with health tracking when configured states/labels go stale.
 
 ## Target Users
 
@@ -110,6 +129,6 @@ It should feel closer to a **developer tool** than a heavy project management sy
 In the future, the system could evolve to include:
 
 - **AI-powered task transformation** — summarizing feedback, clarifying vague comments, categorizing issues (bug, UI tweak, content change)
-- **Direct integrations** — pushing structured tasks to issue trackers (Linear, Jira) or triggering webhooks
+- **More integrations** — extending beyond the current GitHub and Linear sync to other issue trackers (e.g. Jira) and outbound webhooks
 - **Autonomous workflows** — end-to-end pipelines where feedback automatically triggers an AI coding agent to produce a fix and open a pull request
 - **Agent Skills** — shipping a TanStack Intent skill with the npm widget package so agents automatically learn the Faster Fixes workflow when the widget is installed
