@@ -169,8 +169,9 @@ export function CreateProjectDialog({ children }: CreateProjectDialogProps) {
                       />
                     </FormControl>
                     <FormDescription>
-                      The domain of your client&apos;s site. www. and protocol
-                      variants are matched automatically.
+                      The domain of your client&apos;s site. Subdomains, www.,
+                      and protocol variants are matched automatically, and
+                      localhost is always allowed for local development.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

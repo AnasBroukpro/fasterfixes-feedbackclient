@@ -9,15 +9,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 import { Button } from "@workspace/ui/components/button";
+import { CopyableText } from "@workspace/ui/components/copyable-text";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@workspace/ui/components/form";
-import { CopyableText } from "@workspace/ui/components/copyable-text";
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
 import { Separator } from "@workspace/ui/components/separator";
@@ -126,6 +127,11 @@ export function UpdateProjectForm({ projectId }: UpdateProjectFormProps) {
                   {...field}
                 />
               </FormControl>
+              <FormDescription>
+                Subdomains, www., and protocol variants are matched
+                automatically. Localhost is always allowed for local
+                development.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
