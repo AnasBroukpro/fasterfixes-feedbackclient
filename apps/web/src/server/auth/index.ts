@@ -32,6 +32,12 @@ export const auth = betterAuth({
     },
   },
   session: {
+    // Explicit 30-day window with a sliding refresh: any request older than
+    // updateAge re-stamps the expiry, so active users stay signed in and only
+    // genuinely idle sessions lapse. Without these, Better Auth falls back to a
+    // 7-day default, which is shorter than we want for a dev tool.
+    expiresIn: 60 * 60 * 24 * 30, // 30 days
+    updateAge: 60 * 60 * 24, // refresh expiry at most once per day
     cookieCache: {
       enabled: true,
       maxAge: 5 * 60,
