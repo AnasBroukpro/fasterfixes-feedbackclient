@@ -13,14 +13,22 @@ function isLocalhostOrigin(origin: string): boolean {
 
 /**
  * Validates that the request origin's host matches the project's registered
- * domain after normalization (lowercased, www. stripped). Protocol, port, and
- * path are ignored, so https://acme.com and http://www.acme.com both match a
- * project domain of "acme.com".
+ * domain, or any subdomain of it, after normalization (lowercased, www.
+ * stripped). Protocol, port, and path are ignored, so https://acme.com,
+ * http://www.acme.com, and https://staging.acme.com all match a project
+ * domain of "acme.com".
+ *
+ * Subdomains match via a leading-dot boundary (".acme.com"), so look-alikes
+ * like "evil-acme.com" and "acme.com.evil.com" do NOT match. A project is one
+ * website (its registered domain); allowing subdomains covers the staging /
+ * preview / app environments of that same site without letting one project
+ * span unrelated domains — which would bypass per-project pricing.
  *
  * Localhost origins are always allowed so developers can test the widget
  * before deploying. The browser Origin header cannot be spoofed by web pages,
  * so this is safe — only code running on the developer's machine can produce
- * a localhost origin. The API key is still required for authentication.
+ * a localhost origin. The project identifier (X-API-Key header) is still
+ * required to resolve the project.
  */
 export function validateOrigin(
   headers: Headers,
@@ -35,5 +43,5 @@ export function validateOrigin(
   const expected = normalizeDomain(projectDomain);
   if (!requestDomain || !expected) return false;
 
-  return requestDomain === expected;
+  return requestDomain === expected || requestDomain.endsWith(`.${expected}`);
 }
