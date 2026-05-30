@@ -5,11 +5,11 @@ import { CopyButton } from "@workspace/ui/components/copy-button";
 import { ArrowRight } from "lucide-react";
 
 type InstallSnippetStepProps = {
-  apiKey: string;
+  projectId: string;
   onNext: () => void;
 };
 
-function buildSnippet(apiKey: string) {
+function buildSnippet(projectId: string) {
   return `import { FeedbackProvider } from "@fasterfixes/react";
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <FeedbackProvider apiKey="${apiKey}">
+        <FeedbackProvider apiKey="${projectId}">
           {children}
         </FeedbackProvider>
       </body>
@@ -30,17 +30,17 @@ export default function RootLayout({
 }
 
 export function InstallSnippetStep({
-  apiKey,
+  projectId,
   onNext,
 }: InstallSnippetStepProps) {
-  const snippet = buildSnippet(apiKey);
+  const snippet = buildSnippet(projectId);
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold">Install the widget</h1>
         <p className="text-muted-foreground text-sm">
-          Add the feedback widget to your React application. Your API key is
+          Add the feedback widget to your React application. Your Project ID is
           already included in the snippet below.
         </p>
       </div>

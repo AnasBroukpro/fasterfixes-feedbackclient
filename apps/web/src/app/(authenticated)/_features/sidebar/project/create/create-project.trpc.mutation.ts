@@ -47,6 +47,7 @@ export const createProject = planAwareProcedure
     return {
       id: project.id,
       name: project.name,
+      publicId: project.publicId,
       rawApiKey: raw,
     };
   });

@@ -15,19 +15,16 @@ export function OnboardingWizard() {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [name, setName] = React.useState("");
   const [domain, setDomain] = React.useState("");
-  const [apiKey, setApiKey] = React.useState<string | null>(null);
+  const [projectId, setProjectId] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
 
   const createProject = useMutation(
     trpc.onboarding.createProject.mutationOptions({
       onSuccess: (result) => {
-        if (result.rawApiKey) {
-          setApiKey(result.rawApiKey);
-          setCurrentStep(2);
-        } else {
-          // Refresh scenario: project existed, API key no longer available — skip to next steps
-          setCurrentStep(3);
-        }
+        // publicId is always available (even on a refresh where the project
+        // already exists), so the install step is always reachable.
+        setProjectId(result.publicId);
+        setCurrentStep(2);
       },
       onError: (err) => {
         setError(err.message || "Something went wrong. Please try again.");
@@ -76,9 +73,9 @@ export function OnboardingWizard() {
           />
         )}
 
-        {currentStep === 2 && apiKey && (
+        {currentStep === 2 && projectId && (
           <InstallSnippetStep
-            apiKey={apiKey}
+            projectId={projectId}
             onNext={() => setCurrentStep(3)}
           />
         )}

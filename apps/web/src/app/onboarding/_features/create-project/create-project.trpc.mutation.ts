@@ -26,13 +26,14 @@ export const createOnboardingProject = protectedProcedure
     // Handle refresh scenario: project already created during a previous attempt
     const existingProject = await prisma.project.findFirst({
       where: { organizationId: membership.organizationId },
-      select: { id: true, name: true },
+      select: { id: true, name: true, publicId: true },
     });
 
     if (existingProject) {
       return {
         id: existingProject.id,
         name: existingProject.name,
+        publicId: existingProject.publicId,
         rawApiKey: null,
       };
     }
@@ -54,6 +55,7 @@ export const createOnboardingProject = protectedProcedure
     return {
       id: project.id,
       name: project.name,
+      publicId: project.publicId,
       rawApiKey: raw,
     };
   });

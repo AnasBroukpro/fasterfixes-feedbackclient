@@ -45,7 +45,9 @@ export function CreateProjectDialog({ children }: CreateProjectDialogProps) {
   const { setActiveProject } = useActiveProject();
 
   const [open, setOpen] = React.useState(false);
-  const [rawApiKey, setRawApiKey] = React.useState<string | null>(null);
+  const [createdProjectId, setCreatedProjectId] = React.useState<string | null>(
+    null,
+  );
   const [copied, setCopied] = React.useState(false);
 
   const form = useForm<CreateProjectInputs>({
@@ -61,7 +63,7 @@ export function CreateProjectDialog({ children }: CreateProjectDialogProps) {
     trpc.authenticated.projects.create.mutationOptions({
       onSuccess: async (result) => {
         setOpen(false);
-        setRawApiKey(result.rawApiKey);
+        setCreatedProjectId(result.publicId);
         await queryClient.invalidateQueries({
           queryKey: trpc.authenticated.projects.list.queryKey(),
         });
@@ -80,14 +82,14 @@ export function CreateProjectDialog({ children }: CreateProjectDialogProps) {
   };
 
   const handleCopy = () => {
-    if (!rawApiKey) return;
-    navigator.clipboard.writeText(rawApiKey);
+    if (!createdProjectId) return;
+    navigator.clipboard.writeText(createdProjectId);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleApiKeyDialogClose = () => {
-    setRawApiKey(null);
+  const handleCreatedDialogClose = () => {
+    setCreatedProjectId(null);
     router.push("/inbox");
   };
 
@@ -170,8 +172,8 @@ export function CreateProjectDialog({ children }: CreateProjectDialogProps) {
                     </FormControl>
                     <FormDescription>
                       The domain of your client&apos;s site. Subdomains, www.,
-                      and protocol variants are matched automatically, and
-                      localhost is always allowed for local development.
+                      and protocol variants are matched automatically. Localhost
+                      is always allowed for local development.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -190,19 +192,19 @@ export function CreateProjectDialog({ children }: CreateProjectDialogProps) {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={!!rawApiKey} onOpenChange={handleApiKeyDialogClose}>
+      <Dialog open={!!createdProjectId} onOpenChange={handleCreatedDialogClose}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>Project created</DialogTitle>
             <DialogDescription>
-              Here is your API key. It will only be shown once. Copy it now and
-              store it in a safe place.
+              Use this Project ID to install the widget. You can find it anytime
+              in project settings.
             </DialogDescription>
           </DialogHeader>
 
           <div className="bg-muted flex items-center gap-2 rounded-md border p-3">
             <code className="flex-1 font-mono text-sm break-all">
-              {rawApiKey}
+              {createdProjectId}
             </code>
             <Button variant="ghost" size="icon" onClick={handleCopy}>
               {copied ? (
@@ -213,8 +215,8 @@ export function CreateProjectDialog({ children }: CreateProjectDialogProps) {
             </Button>
           </div>
 
-          <Button onClick={handleApiKeyDialogClose} className="w-full">
-            I&apos;ve copied my API key
+          <Button onClick={handleCreatedDialogClose} className="w-full">
+            Done
           </Button>
         </DialogContent>
       </Dialog>
