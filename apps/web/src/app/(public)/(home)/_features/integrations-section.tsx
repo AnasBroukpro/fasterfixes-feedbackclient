@@ -32,14 +32,14 @@ const integrations: Integration[] = [
     href: "/integrations/linear" as Route,
     description:
       "Auto-create Linear issues from feedback with full dev context. Status sync survives renamed and custom workflow states.",
-    icon: <LinearIcon className="size-5 shrink-0" />,
+    icon: <LinearIcon colored className="size-5 shrink-0" />,
   },
   {
     label: "Slack integration",
     href: "/integrations/slack" as Route,
     description:
       "Get notified in a Slack channel when feedback arrives or changes, with screenshot and status badge.",
-    icon: <SlackIcon className="size-5 shrink-0" />,
+    icon: <SlackIcon colored className="size-5 shrink-0" />,
   },
 ];
 

@@ -1,11 +1,14 @@
-type Props = React.ComponentPropsWithoutRef<"svg">;
+type Props = React.ComponentPropsWithoutRef<"svg"> & {
+  // Render the Linear brand color instead of inheriting `currentColor`.
+  colored?: boolean;
+};
 
-export const LinearIcon = ({ className, ...props }: Props) => {
+export const LinearIcon = ({ className, colored = false, ...props }: Props) => {
   return (
     <svg
       className={className}
       {...props}
-      fill="currentColor"
+      fill={colored ? "#5E6AD2" : "currentColor"}
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
     >
