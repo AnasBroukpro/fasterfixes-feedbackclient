@@ -33,6 +33,13 @@ const rows: { label: string; cells: [Cell, Cell] }[] = [
     ],
   },
   {
+    label: "Slack notifications",
+    cells: [
+      { type: "yes", note: "New feedback + live status, per project" },
+      { type: "yes", note: "Comment alerts to DM or channel" },
+    ],
+  },
+  {
     label: "MCP server (Claude Code / Cursor)",
     cells: [{ type: "yes" }, { type: "no" }],
   },

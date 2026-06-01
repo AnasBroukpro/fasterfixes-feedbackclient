@@ -58,6 +58,13 @@ const rows: { label: string; cells: [Cell, Cell] }[] = [
       { type: "yes", note: "Jira, Trello, ClickUp, Asana — link-back only" },
     ],
   },
+  {
+    label: "Slack notifications",
+    cells: [
+      { type: "yes", note: "New feedback + live status, per project" },
+      { type: "yes", note: "Comments, mentions, new pages — one-way" },
+    ],
+  },
 ];
 
 const headers = ["FasterFixes", "Ruttl"] as const;

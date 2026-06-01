@@ -92,6 +92,13 @@ const rows: { label: string; cells: [Cell, Cell] }[] = [
     ],
   },
   {
+    label: "Slack notifications",
+    cells: [
+      { type: "yes", note: "New feedback + live status, per project" },
+      { type: "yes", note: "New feedback + status events · one-way" },
+    ],
+  },
+  {
     label: "Linear two-way sync",
     cells: [
       { type: "yes", note: "Bidirectional · workflow-state aware" },

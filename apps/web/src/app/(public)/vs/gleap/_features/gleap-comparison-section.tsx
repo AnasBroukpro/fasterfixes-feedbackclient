@@ -65,6 +65,13 @@ const rows: { label: string; cells: [Cell, Cell] }[] = [
       { type: "yes", note: "Jira, Linear, GitHub, Asana, ClickUp, +" },
     ],
   },
+  {
+    label: "Slack notifications",
+    cells: [
+      { type: "yes", note: "New feedback + live status, per project" },
+      { type: "yes", note: "Notifications only" },
+    ],
+  },
 ];
 
 const headers = ["FasterFixes", "Gleap"] as const;

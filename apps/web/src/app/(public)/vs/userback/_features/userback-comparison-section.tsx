@@ -103,6 +103,13 @@ const rows: { label: string; cells: [Cell, Cell] }[] = [
     ],
   },
   {
+    label: "Slack notifications",
+    cells: [
+      { type: "yes", note: "New feedback + live status, per project" },
+      { type: "yes", note: "Two-way · assign and resolve from Slack" },
+    ],
+  },
+  {
     label: "Custom branding",
     cells: [
       { type: "partial", note: "Roadmap" },
