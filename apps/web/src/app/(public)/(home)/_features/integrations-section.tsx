@@ -38,7 +38,7 @@ const integrations: Integration[] = [
     label: "Slack integration",
     href: "/integrations/slack" as Route,
     description:
-      "Post new feedback to a Slack channel with screenshot and status badge. The message updates in place as the status changes.",
+      "Get notified in a Slack channel when feedback arrives or changes, with screenshot and status badge.",
     icon: <SlackIcon className="size-5 shrink-0" />,
   },
 ];

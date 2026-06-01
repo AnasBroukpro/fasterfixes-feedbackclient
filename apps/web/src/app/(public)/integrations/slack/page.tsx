@@ -20,7 +20,7 @@ import { SlackUpdatesSection } from "./_features/slack-updates-section";
 const pageUrl = `${APP_URL}/integrations/slack`;
 const title = `Slack notifications for website feedback | ${SITE_NAME}`;
 const description =
-  "Get a Slack message every time a client submits feedback on your staging site — with screenshot, page URL, and status. The same message updates in place. No noise.";
+  "Get notified in Slack when a client submits or updates feedback on your staging site — with screenshot, page URL, and status. No noise.";
 const ogImageAlt =
   "FasterFixes Slack integration — client feedback posted to a Slack channel with screenshot and status badge";
 const datePublished = "2026-05-31T00:00:00.000Z";

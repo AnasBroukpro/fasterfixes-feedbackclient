@@ -17,9 +17,9 @@ export function SlackHero() {
           </h1>
           <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-lg md:text-xl">
             One Slack message per submission — with reviewer name, page URL,
-            comment, screenshot, and a status badge. As the feedback moves
-            through your workflow, the same message updates in place. No
-            context-switching, no channel noise.
+            comment, screenshot, and a status badge. Your team gets notified
+            when feedback arrives or changes. No context-switching, no channel
+            noise.
           </p>
 
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">

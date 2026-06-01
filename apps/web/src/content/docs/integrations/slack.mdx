@@ -1,45 +1,22 @@
 ---
 title: Slack integration setup
-description: Set up the Faster Fixes Slack integration to post new feedback into a Slack channel and update each message in place as its status changes.
+description: Set up the Faster Fixes Slack integration to get notified in a Slack channel when feedback arrives or changes.
 ---
 
-Faster Fixes integrates with Slack to announce new feedback in a channel of your choice and keep each message up to date as its status changes. This is a one-way notification channel — new feedback posts a message, status changes edit that same message in place. It does not create issues in Slack; for two-way issue tracking, use the [GitHub](/docs/integrations/github) or [Linear](/docs/integrations/linear) integrations instead. For a product overview, see the [Slack integration overview](/integrations/slack).
+Faster Fixes integrates with Slack to notify you in a channel of your choice when feedback is created or its status changes. This is a one-way notification channel — it does not create issues in Slack; for two-way issue tracking, use the [GitHub](/docs/integrations/github) or [Linear](/docs/integrations/linear) integrations instead. For a product overview, see the [Slack integration overview](/integrations/slack).
 
 ## Setup
 
-1. Go to **Application Settings → Integrations** from the sidebar
+1. Go to **[Application Settings](/integrations) → Integrations** from the sidebar
 2. Click **Connect Slack** and authorize the Faster Fixes app on your workspace
-3. In **Project Settings → Slack**, pick the channel that should receive feedback
+3. In **[Project Settings](/settings) → Slack**, pick the channel that should receive feedback
 4. Leave posting enabled, or toggle it off without disconnecting
 
 The bot is installed once per organization. Each project then links to a single channel within that workspace.
 
-## What gets posted
+## Notifications
 
-When new feedback is submitted, Faster Fixes posts a message to the linked channel containing:
-
-- Reviewer name
-- Page URL
-- Feedback comment
-- Screenshot
-- Status badge
-- An **Open in Faster Fixes** link
-
-The full diagnostic trail (DOM selector, browser info, console logs, network requests) is not posted to Slack — follow the link to see it in the dashboard.
-
-## Status updates in place
-
-Faster Fixes edits the original message rather than posting a new one each time, so the channel stays readable. The status badge reflects the current state:
-
-| Status | Badge |
-|--------|-------|
-| New | New |
-| In progress | In progress |
-| Resolved (by a person) | Resolved |
-| Resolved (by an agent) | 🤖 Resolved by agent |
-| Closed | Closed |
-
-The agent badge distinguishes feedback resolved automatically by an AI agent from feedback resolved by a team member.
+Faster Fixes notifies the linked channel when feedback is created or its status changes. The full diagnostic trail (DOM selector, browser info, console logs, network requests) stays in the dashboard — follow the link in the message to see it.
 
 ## Channels
 
@@ -49,14 +26,6 @@ Public channels are selectable from a dropdown out of the box. Private channels 
 
 Each project links to its own channel, so feedback from different client projects stays isolated rather than landing in a single shared firehose. You can change a project's channel or turn posting off at any time without affecting other projects.
 
-## Backfill
-
-Only feedback created after you enable posting appears in Slack. Existing feedback is not backfilled. Bulk imports do not post to Slack.
-
-## When a message can't be posted
-
-If the bot is removed from the channel, the channel is archived, or the token is revoked, Faster Fixes stops posting, marks the project link as unhealthy, and surfaces the issue in the integrations UI. There is no infinite retry — fix the cause and re-enable posting.
-
 ## Disabling and disconnecting
 
-You can turn posting off per project from **Project Settings → Slack** without disconnecting. Disconnecting from **Application Settings → Integrations** removes the workspace install and cascades all project links. Existing Slack messages are not deleted; they simply stop updating.
+You can turn posting off per project from **[Project Settings](/settings) → Slack** without disconnecting. Disconnecting from **[Application Settings](/integrations) → Integrations** removes the workspace install and cascades all project links. Existing Slack messages are not deleted; they simply stop updating.

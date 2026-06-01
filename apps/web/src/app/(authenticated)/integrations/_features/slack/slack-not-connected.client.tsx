@@ -7,8 +7,8 @@ export function SlackNotConnected() {
   return (
     <div className="flex flex-col gap-4">
       <p className="text-muted-foreground text-sm">
-        No Slack workspace connected. Add Faster Fixes to Slack to get a message
-        when new feedback arrives, updated in place as the status changes.
+        No Slack workspace connected. Add Faster Fixes to Slack to get notified
+        when feedback arrives or changes.
       </p>
       <Button asChild>
         <a href="/api/slack/install">

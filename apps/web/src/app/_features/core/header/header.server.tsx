@@ -50,7 +50,7 @@ const integrationLinks = [
   {
     href: "/integrations/slack",
     label: "Slack",
-    description: "Post new feedback to a channel; the message updates in place as status changes.",
+    description: "Get notified in Slack when feedback arrives or changes.",
     icon: <SlackIcon className="size-4 shrink-0" />,
   },
 ] satisfies {

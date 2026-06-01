@@ -14,7 +14,7 @@ export const slackSetupSteps = [
   },
   {
     label: "Feedback starts posting",
-    body: "Share the widget on your staging or production URL. Each new submission posts a message, and that message updates in place as the status changes.",
+    body: "Share the widget on your staging or production URL. Each new submission posts a message, and the team is notified when its status changes.",
   },
 ];
 
