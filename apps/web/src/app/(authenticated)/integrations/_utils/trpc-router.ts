@@ -7,6 +7,8 @@ import { disconnectGitHub } from "../_features/github/disconnect-github.trpc.mut
 import { getGitHubInstallation } from "../_features/github/get-github-installation.trpc.query";
 import { disconnectLinear } from "../_features/linear/disconnect-linear.trpc.mutation";
 import { getLinearInstallation } from "../_features/linear/get-linear-installation.trpc.query";
+import { disconnectSlack } from "../_features/slack/disconnect-slack.trpc.mutation";
+import { getSlackInstallation } from "../_features/slack/get-slack-installation.trpc.query";
 
 export const integrationsRouter = router({
   agentToken: router({
@@ -22,5 +24,9 @@ export const integrationsRouter = router({
   linear: router({
     getInstallation: getLinearInstallation,
     disconnect: disconnectLinear,
+  }),
+  slack: router({
+    getInstallation: getSlackInstallation,
+    disconnect: disconnectSlack,
   }),
 });

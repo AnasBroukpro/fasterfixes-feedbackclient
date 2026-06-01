@@ -1,101 +1,103 @@
 model Project {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    name            String
-    domain          String @map("url")
-    publicId        String @unique
-    apiKeyHash      String
-    apiKeyLastFour  String
+  name           String
+  domain         String @map("url")
+  publicId       String @unique
+  apiKeyHash     String
+  apiKeyLastFour String
 
-    organizationId String
-    organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
-    widgetConfig WidgetConfig?
-    reviewers    Reviewer[]
-    feedback     Feedback[]
-    gitHubLink   ProjectGitHubLink?
-    linearLink   ProjectLinearLink?
+  widgetConfig WidgetConfig?
+  reviewers    Reviewer[]
+  feedback     Feedback[]
+  gitHubLink   ProjectGitHubLink?
+  linearLink   ProjectLinearLink?
+  slackLink    ProjectSlackLink?
 
-    @@index([organizationId])
-    @@index([publicId])
-    @@map("project")
+  @@index([organizationId])
+  @@index([publicId])
+  @@map("project")
 }
 
 model WidgetConfig {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    projectId String  @unique
-    project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String  @unique
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-    enabled  Boolean @default(true)
+  enabled Boolean @default(true)
 
-    @@map("widget_config")
+  @@map("widget_config")
 }
 
 model Reviewer {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    projectId String
-    project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-    name     String
-    token    String  @unique
-    isActive Boolean @default(true)
+  name     String
+  token    String  @unique
+  isActive Boolean @default(true)
 
-    feedback Feedback[]
+  feedback Feedback[]
 
-    @@index([projectId])
-    @@map("reviewer")
+  @@index([projectId])
+  @@map("reviewer")
 }
 
 model Feedback {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    projectId  String
-    project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-    reviewerId String
-    reviewer   Reviewer @relation(fields: [reviewerId], references: [id], onDelete: Cascade)
+  projectId  String
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  reviewerId String
+  reviewer   Reviewer @relation(fields: [reviewerId], references: [id], onDelete: Cascade)
 
-    status  String @default("new")
-    comment String
-    pageUrl String
+  status  String @default("new")
+  comment String
+  pageUrl String
 
-    clickX   Float?
-    clickY   Float?
-    selector String?
+  clickX   Float?
+  clickY   Float?
+  selector String?
 
-    browserName    String?
-    browserVersion String?
-    os             String?
-    viewportWidth  Int?
-    viewportHeight Int?
+  browserName    String?
+  browserVersion String?
+  os             String?
+  viewportWidth  Int?
+  viewportHeight Int?
 
-    metadata Json?
+  metadata Json?
 
-    // Diagnostic Trail: console + network snapshot captured by the widget at
-    // submission. Read lazily by the dashboard modal only; never selected on
-    // the widget read path (kept out of the hot getFeedback query).
-    diagnosticTrail Json?
+  // Diagnostic Trail: console + network snapshot captured by the widget at
+  // submission. Read lazily by the dashboard modal only; never selected on
+  // the widget read path (kept out of the hot getFeedback query).
+  diagnosticTrail Json?
 
-    screenshotId String?
-    screenshot   Asset?  @relation("FeedbackScreenshot", fields: [screenshotId], references: [id], onDelete: SetNull)
+  screenshotId String?
+  screenshot   Asset?  @relation("FeedbackScreenshot", fields: [screenshotId], references: [id], onDelete: SetNull)
 
-    assigneeId String?
-    assignee   Member? @relation(fields: [assigneeId], references: [id], onDelete: SetNull)
+  assigneeId String?
+  assignee   Member? @relation(fields: [assigneeId], references: [id], onDelete: SetNull)
 
-    issueLink       FeedbackIssueLink?
-    linearIssueLink FeedbackLinearIssueLink?
+  issueLink       FeedbackIssueLink?
+  linearIssueLink FeedbackLinearIssueLink?
+  slackMessage    FeedbackSlackMessage?
 
-    @@index([projectId])
-    @@index([reviewerId])
-    @@index([assigneeId])
-    @@map("feedback")
+  @@index([projectId])
+  @@index([reviewerId])
+  @@index([assigneeId])
+  @@map("feedback")
 }

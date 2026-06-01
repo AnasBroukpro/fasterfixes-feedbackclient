@@ -1,6 +1,6 @@
 # Faster Fixes
 
-A widget that lets a website's end-users report bugs and feedback in-page; reports flow into a project inbox and can be mirrored to external trackers (GitHub Issues, Linear).
+A widget that lets a website's end-users report bugs and feedback in-page; reports flow into a project inbox, can be mirrored to external trackers (GitHub Issues, Linear), and announced to notification channels (Slack).
 
 ## Language
 
@@ -38,6 +38,9 @@ The organization-scoped secret (`ff_agent_`) for the agent/MCP API. The only gen
 **Status**:
 The state of a Feedback. Canonical values: `new`, `in_progress`, `resolved`, `archived`.
 
+**Status actor**:
+Who or what drove a Status change: a dashboard user, a Tracker sync, or the **Agent** (an Agent-token caller). Travels on the status-change event so a **Notification channel** can distinguish an agent-resolved Feedback from a human-resolved one.
+
 **Archived**:
 A Feedback the team has decided not to act on (won't fix, duplicate, out of scope). Stored in the database as `status = "closed"` for legacy reasons; the literal will be renamed in a future migration. UI label is **Archived** everywhere (status dropdown, kanban action, archive view).
 _Avoid_: Closed, Dismissed, Rejected.
@@ -48,11 +51,15 @@ _Avoid_: Closed, Dismissed, Rejected.
 An external issue-tracking system Faster Fixes can mirror Feedback into. Currently GitHub Issues and Linear.
 _Avoid_: Integration target, Sink.
 
+**Notification channel**:
+A category of external connection where Faster Fixes *announces* Feedback one-way, holding no mirror and creating no Issue. First instance: Slack. Distinct from a **Tracker** (two-way, mirrors Feedback as an Issue and converges its state). Not to be confused with a Slack *channel* (the specific room a Project posts into).
+_Avoid_: Webhook (implementation detail), Sink.
+
 **Installation**:
-The org-level connection to a Tracker (`GitHubInstallation`, `LinearInstallation`). One per (Organization × Tracker).
+The org-level connection to an external system — a **Tracker** (`GitHubInstallation`, `LinearInstallation`) or a **Notification channel** (`SlackInstallation`). One per (Organization × external system).
 
 **Project link**:
-The project-level binding from a Faster Fixes Project to a Tracker scope (a GitHub repo, a Linear team). One per (Project × Tracker).
+The project-level binding from a Faster Fixes Project to an external scope — a Tracker scope (a GitHub repo, a Linear team) or a Notification channel destination (a Slack channel). One per (Project × external system).
 
 **Issue link**:
 The per-Feedback record connecting a single Feedback to its mirrored issue in a Tracker. A Feedback can have at most one issue link per Tracker, but may have one for GitHub *and* one for Linear simultaneously.
@@ -82,6 +89,7 @@ The fixed-size in-memory store the Widget fills from page load; oldest entries d
 - A **Reviewer** submits **Feedback** through the widget; Reviewers are not authenticated app users
 - An **Installation** is owned by an Organization and shared across all Projects in that Organization
 - The same **Feedback** may exist as a GitHub Issue and a Linear Issue at the same time; both are mirrors of the Feedback, not peers of each other
+- A **Notification channel** (Slack) receives one-way announcements of a Feedback; unlike a **Tracker** it holds no mirror, has no **Issue link**, and never feeds state back to the Feedback
 
 ## Example dialogue
 

@@ -69,7 +69,8 @@ export async function updateFeedbackStatus(
   inngest
     .send({
       name: "feedback/status-changed",
-      data: { feedbackId: feedback.id, newStatus: parsed.data.status },
+      // actor "agent": this endpoint is only reachable with an agent token.
+      data: { feedbackId: feedback.id, newStatus: parsed.data.status, actor: "agent" },
     })
     .catch(() => {});
 

@@ -65,6 +65,8 @@ export const syncGitHubIssueStatus = inngest.createFunction(
         feedbackId: issueLink.feedbackId,
         newStatus,
         origin: "github",
+        // Change originated from the GitHub issue webhook syncing back.
+        actor: "tracker",
       },
     });
 

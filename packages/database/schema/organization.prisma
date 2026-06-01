@@ -1,87 +1,89 @@
 model Organization {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    name             String
-    slug             String
-    logo             String?
-    metadata         String?
-    isDefault        Boolean @default(false)
-    stripeCustomerId String?
+  name             String
+  slug             String
+  logo             String?
+  metadata         String?
+  isDefault        Boolean @default(false)
+  stripeCustomerId String?
 
-    members     Member[]
-    invitations Invitation[]
+  members     Member[]
+  invitations Invitation[]
 
-    subscription Subscription?
+  subscription Subscription?
 
-    projects    Project[]
-    agentTokens AgentToken[]
+  projects    Project[]
+  agentTokens AgentToken[]
 
-    gitHubInstallations GitHubInstallation[]
-    linearInstallation  LinearInstallation?
+  gitHubInstallations GitHubInstallation[]
+  linearInstallation  LinearInstallation?
+  slackInstallation   SlackInstallation?
 
-    @@unique([slug])
-    @@map("organization")
+  @@unique([slug])
+  @@map("organization")
 }
 
 model Member {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    organizationId String
-    organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-    userId         String
-    user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-    role           String       @default("member")
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role           String       @default("member")
 
-    assignedFeedback             Feedback[]
-    gitHubInstallations          GitHubInstallation[]
-    linearInstallationsInstalled LinearInstallation[]
+  assignedFeedback             Feedback[]
+  gitHubInstallations          GitHubInstallation[]
+  linearInstallationsInstalled LinearInstallation[]
+  slackInstallations           SlackInstallation[]
 
-    @@index([organizationId])
-    @@index([userId])
-    @@map("member")
+  @@index([organizationId])
+  @@index([userId])
+  @@map("member")
 }
 
 model Invitation {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    organizationId String
-    organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-    email          String
-    role           String?
-    status         String       @default("pending")
-    expiresAt      DateTime
-    inviterId      String
-    user           User         @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  email          String
+  role           String?
+  status         String       @default("pending")
+  expiresAt      DateTime
+  inviterId      String
+  user           User         @relation(fields: [inviterId], references: [id], onDelete: Cascade)
 
-    @@index([organizationId])
-    @@index([email])
-    @@map("invitation")
+  @@index([organizationId])
+  @@index([email])
+  @@map("invitation")
 }
 
 model AgentToken {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    name          String
-    tokenHash     String @unique
-    tokenLastFour String
+  name          String
+  tokenHash     String @unique
+  tokenLastFour String
 
-    organizationId String
-    organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
-    scopes     String[]
-    isActive   Boolean   @default(true)
-    lastUsedAt DateTime?
-    revokedAt  DateTime?
+  scopes     String[]
+  isActive   Boolean   @default(true)
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
 
-    @@index([organizationId])
-    @@index([tokenHash])
-    @@map("agent_token")
+  @@index([organizationId])
+  @@index([tokenHash])
+  @@map("agent_token")
 }

@@ -40,3 +40,4 @@ What changes because of this? What new constraints does it create?
 - [ADR-0003](./0003-encrypt-tracker-tokens-at-rest.md) — Encrypt Tracker tokens at rest despite Better Auth's plaintext precedent.
 - [ADR-0004](./0004-programmatic-blog-images.md) — Programmatic blog images.
 - [ADR-0005](./0005-widget-identity-public-id-origin-auth.md) — Widget identifies its Project by a public ID, secured by allowed origins + reviewer token, not a secret API key.
+- [ADR-0006](./0006-slack-uses-custom-bot-install-oauth.md) — Slack integration uses a custom bot-install OAuth route, not Better Auth social login.

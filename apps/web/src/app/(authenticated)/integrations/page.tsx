@@ -3,6 +3,7 @@ import { DashboardPageContent } from "@/app/_features/core/dashboard/dashboard-p
 import { AgentTokensSection } from "./_features/agent-tokens/agent-tokens-section.client";
 import { GitHubIntegrationSection } from "./_features/github/github-integration-section.client";
 import { LinearIntegrationSection } from "./_features/linear/linear-integration-section.client";
+import { SlackIntegrationSection } from "./_features/slack/slack-integration-section.client";
 
 export default function IntegrationsPage() {
   return (
@@ -24,6 +25,15 @@ export default function IntegrationsPage() {
           cardClassName="lg:max-w-lg"
         >
           <LinearIntegrationSection />
+        </DashboardSection>
+
+        <DashboardSection
+          title="Slack"
+          description="Connect your Slack workspace to get a message when new feedback arrives."
+          cardTitle="Slack integration"
+          cardClassName="lg:max-w-lg"
+        >
+          <SlackIntegrationSection />
         </DashboardSection>
 
         <DashboardSection

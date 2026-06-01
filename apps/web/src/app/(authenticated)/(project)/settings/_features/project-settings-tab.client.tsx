@@ -8,6 +8,7 @@ import { ApiKeyMigrationNotice } from "./api-key-migration-notice.client";
 import { DeleteProjectButton } from "./delete/delete-project-button.client";
 import { GitHubSection } from "./github/github-section.client";
 import { LinearSection } from "./linear/linear-section.client";
+import { SlackSection } from "./slack/slack-section.client";
 import { UpdateProjectForm } from "./update/update-project-form.client";
 
 type ProjectSettingsTabProps = {
@@ -51,6 +52,15 @@ export function ProjectSettingsTab({ projectId }: ProjectSettingsTabProps) {
         cardClassName="lg:max-w-lg"
       >
         <LinearSection projectId={projectId} />
+      </DashboardSection>
+
+      <DashboardSection
+        title="Slack"
+        description="Post a message to a channel when new feedback arrives."
+        cardTitle="Slack integration"
+        cardClassName="lg:max-w-lg"
+      >
+        <SlackSection projectId={projectId} />
       </DashboardSection>
 
       <DashboardSection

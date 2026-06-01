@@ -68,6 +68,8 @@ export const syncLinearIssueStatus = inngest.createFunction(
         feedbackId: issueLink.feedbackId,
         newStatus,
         origin: "linear",
+        // Change originated from the Linear issue webhook syncing back.
+        actor: "tracker",
       },
     });
 

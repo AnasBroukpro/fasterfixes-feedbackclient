@@ -2,7 +2,7 @@
 
 import { inngest } from "@/server/inngest";
 import { protectedProcedure } from "@/server/trpc/trpc";
-import { TRPCError } from "@trpc/server";
+import { TRPCError, type inferProcedureOutput } from "@trpc/server";
 import z from "zod";
 
 export const bulkUpdateFeedbackStatus = protectedProcedure
@@ -44,9 +44,14 @@ export const bulkUpdateFeedbackStatus = protectedProcedure
     // fault isolation — a single failing GitHub sync won't block the others.
     const events = input.feedbackIds.map((feedbackId) => ({
       name: "feedback/status-changed" as const,
-      data: { feedbackId, newStatus: input.status },
+      // Dashboard bulk edits are always a human in the inbox.
+      data: { feedbackId, newStatus: input.status, actor: "user" as const },
     }));
     inngest.send(events).catch(() => {});
 
     return { count: input.feedbackIds.length };
   });
+
+export type BulkUpdateFeedbackStatusOutput = inferProcedureOutput<
+  typeof bulkUpdateFeedbackStatus
+>;

@@ -2,7 +2,7 @@
 
 import { inngest } from "@/server/inngest";
 import { protectedProcedure } from "@/server/trpc/trpc";
-import { TRPCError } from "@trpc/server";
+import { TRPCError, type inferProcedureOutput } from "@trpc/server";
 import { UpdateFeedbackStatusSchema } from "./update-feedback-status.schema";
 
 export const updateFeedbackStatus = protectedProcedure
@@ -39,9 +39,14 @@ export const updateFeedbackStatus = protectedProcedure
     inngest
       .send({
         name: "feedback/status-changed",
-        data: { feedbackId: input.feedbackId, newStatus: input.status },
+        // Dashboard edits are always a human in the inbox.
+        data: { feedbackId: input.feedbackId, newStatus: input.status, actor: "user" },
       })
       .catch(() => {});
 
     return { id: input.feedbackId };
   });
+
+export type UpdateFeedbackStatusOutput = inferProcedureOutput<
+  typeof updateFeedbackStatus
+>;

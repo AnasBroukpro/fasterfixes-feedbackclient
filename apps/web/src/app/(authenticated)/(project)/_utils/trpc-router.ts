@@ -30,6 +30,10 @@ import { listLinearTeamLabels } from "../settings/_features/linear/link-team/lis
 import { listLinearTeamStates } from "../settings/_features/linear/link-team/list-team-states.trpc.query";
 import { unlinkLinearTeam } from "../settings/_features/linear/unlink-team/unlink-team.trpc.mutation";
 import { updateProjectLinearLink } from "../settings/_features/linear/update-link/update-project-linear-link.trpc.mutation";
+import { getProjectSlackLink } from "../settings/_features/slack/get-project-slack-link.trpc.query";
+import { listSlackChannels } from "../settings/_features/slack/link-channel/list-slack-channels.trpc.query";
+import { setProjectSlackChannel } from "../settings/_features/slack/link-channel/set-project-slack-channel.trpc.mutation";
+import { updateProjectSlackLink } from "../settings/_features/slack/update-link/update-project-slack-link.trpc.mutation";
 import { regenerateApiKey } from "../settings/_features/regenerate-api-key/regenerate-api-key.trpc.mutation";
 import { updateProject } from "../settings/_features/update/update-project.trpc.mutation";
 import { getProjects } from "./get-projects.trpc.query";
@@ -76,5 +80,11 @@ export const projectsRouter = router({
     linkTeam: linkLinearTeam,
     unlinkTeam: unlinkLinearTeam,
     updateLink: updateProjectLinearLink,
+  }),
+  slack: router({
+    getLink: getProjectSlackLink,
+    listChannels: listSlackChannels,
+    setProjectChannel: setProjectSlackChannel,
+    updateLink: updateProjectSlackLink,
   }),
 });
