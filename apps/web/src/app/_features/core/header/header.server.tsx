@@ -6,6 +6,7 @@ import { AnimatedText } from "@workspace/ui/components/animated-text";
 import { Button } from "@workspace/ui/components/button";
 import { GithubIcon } from "@workspace/ui/components/icons/github-icon";
 import { LinearIcon } from "@workspace/ui/components/icons/linear-icon";
+import { McpIcon } from "@workspace/ui/components/icons/mcp-icon";
 import { SlackIcon } from "@workspace/ui/components/icons/slack-icon";
 import {
   NavigationMenu,
@@ -22,9 +23,10 @@ import { ThemeToggle } from "./theme-toggle.client";
 
 const GITHUB_REPO_URL = "https://github.com/manucoffin/faster-fixes";
 
-const leadingNavLinks = [
-  { href: "/docs", label: "Documentation" },
-] satisfies { href: string; label: string }[];
+const leadingNavLinks = [{ href: "/docs", label: "Documentation" }] satisfies {
+  href: string;
+  label: string;
+}[];
 
 const trailingNavLinks = [
   { href: "/pricing", label: "Pricing" },
@@ -44,7 +46,8 @@ const integrationLinks = [
   {
     href: "/integrations/linear",
     label: "Linear",
-    description: "Auto-create Linear issues from feedback, sync status both ways.",
+    description:
+      "Auto-create Linear issues from feedback, sync status both ways.",
     icon: <LinearIcon className="size-4 shrink-0" />,
   },
   {
@@ -52,6 +55,12 @@ const integrationLinks = [
     label: "Slack",
     description: "Get notified in Slack when feedback arrives or changes.",
     icon: <SlackIcon className="size-4 shrink-0" />,
+  },
+  {
+    href: "/integrations/mcp",
+    label: "MCP server",
+    description: "Fetch, fix, and resolve feedback from your coding agent.",
+    icon: <McpIcon className="size-4 shrink-0" />,
   },
 ] satisfies {
   href: string;
@@ -72,10 +81,7 @@ export async function Header() {
         <div className="flex items-center">
           {isCloud() && (
             <div className="md:hidden">
-              <MobileNav
-                links={navLinks}
-                integrationLinks={integrationLinks}
-              />
+              <MobileNav links={navLinks} integrationLinks={integrationLinks} />
             </div>
           )}
           <AppLogo className="hidden shrink-0 md:flex" />

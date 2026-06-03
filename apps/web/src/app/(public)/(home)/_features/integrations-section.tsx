@@ -7,6 +7,7 @@ import {
 } from "@workspace/ui/components/card";
 import { GithubIcon } from "@workspace/ui/components/icons/github-icon";
 import { LinearIcon } from "@workspace/ui/components/icons/linear-icon";
+import { McpIcon } from "@workspace/ui/components/icons/mcp-icon";
 import { SlackIcon } from "@workspace/ui/components/icons/slack-icon";
 import { ArrowRightIcon } from "lucide-react";
 import type { Route } from "next";
@@ -40,6 +41,13 @@ const integrations: Integration[] = [
     description:
       "Get notified in a Slack channel when feedback arrives or changes, with screenshot and status badge.",
     icon: <SlackIcon colored className="size-5 shrink-0" />,
+  },
+  {
+    label: "MCP server",
+    href: "/integrations/mcp" as Route,
+    description:
+      "Connect Claude Code, Cursor, and other coding agents to feedback. Fetch a full repro bundle, fix, and resolve from the terminal.",
+    icon: <McpIcon className="size-5 shrink-0" />,
   },
 ];
 

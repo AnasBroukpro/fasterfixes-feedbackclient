@@ -112,6 +112,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${APP_URL}/integrations/mcp`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
       url: `${APP_URL}/blog`,
       lastModified: new Date(),
       changeFrequency: "weekly",
