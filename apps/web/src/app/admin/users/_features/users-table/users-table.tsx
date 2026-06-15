@@ -78,6 +78,16 @@ const columns: ColumnDef<GetPaginatedUsersOutput["users"][number]>[] = [
     enableSorting: true,
   },
   {
+    accessorKey: "feedbackCount",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Feedback" />
+    ),
+    cell: ({ getValue }) => (
+      <div className="tabular-nums">{getValue<number>()}</div>
+    ),
+    enableSorting: true,
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
       const userId = row.original.id;
@@ -155,7 +165,9 @@ export const UsersTable = () => {
       search,
       page: currentPage,
       pageSize,
-      sortBy: (sortBy as "name" | "email" | "createdAt") || undefined,
+      sortBy:
+        (sortBy as "name" | "email" | "createdAt" | "feedbackCount") ||
+        undefined,
       sortOrder: (sortOrder as "asc" | "desc") || undefined,
     }));
 
