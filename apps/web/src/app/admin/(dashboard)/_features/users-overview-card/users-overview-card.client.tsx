@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { matchQueryStatus } from "@/utils/tanstack-query/match-query-status";
 import { Card, CardContent } from "@workspace/ui/components/card";
 import { Skeleton } from "@workspace/ui/components/skeleton";
+import { cn } from "@workspace/ui/lib/utils";
 
 export function UsersOverviewCard() {
   const trpc = useTRPC();
@@ -13,28 +14,52 @@ export function UsersOverviewCard() {
   return matchQueryStatus(query, {
     Loading: <UsersOverviewCardLoading />,
     Errored: <UsersOverviewCardError />,
-    Success: ({ data }) => (
-      <Card>
-        <CardContent>
-          <div className="text-2xl font-bold">{data?.totalCount}</div>
-          <p className="text-muted-foreground mb-4 text-xs">
-            Total users
-          </p>
+    Success: ({ data }) => {
+      const growth = data?.monthOverMonthGrowth ?? null;
+      const formattedGrowth =
+        growth == null
+          ? null
+          : `${growth > 0 ? "+" : ""}${growth.toFixed(1)}%`;
 
-          {/* New users this month section */}
-          <div className="space-y-3 border-t pt-4">
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground text-xs">
-                New this month
-              </span>
-              <span className="text-sm font-semibold">
-                {data?.newUsersThisMonth}
-              </span>
+      return (
+        <Card>
+          <CardContent>
+            <div className="text-2xl font-bold">{data?.totalCount}</div>
+            <p className="text-muted-foreground mb-4 text-xs">
+              Total users
+            </p>
+
+            {/* New users this month section */}
+            <div className="space-y-3 border-t pt-4">
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground text-xs">
+                  New this month
+                </span>
+                <span className="text-sm font-semibold">
+                  {data?.newUsersThisMonth}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground text-xs">
+                  vs last month
+                </span>
+                <span
+                  className={cn(
+                    "text-xs font-medium",
+                    growth == null && "text-muted-foreground",
+                    growth != null && growth > 0 && "text-emerald-600",
+                    growth != null && growth < 0 && "text-destructive",
+                    growth === 0 && "text-muted-foreground",
+                  )}
+                >
+                  {formattedGrowth ?? "—"}
+                </span>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-    ),
+          </CardContent>
+        </Card>
+      );
+    },
   });
 }
 
@@ -54,6 +79,10 @@ function UsersOverviewCardLoading() {
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground text-xs">New this month</span>
             <Skeleton className="h-5 w-8" />
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-muted-foreground text-xs">vs last month</span>
+            <Skeleton className="h-4 w-12" />
           </div>
         </div>
       </CardContent>
