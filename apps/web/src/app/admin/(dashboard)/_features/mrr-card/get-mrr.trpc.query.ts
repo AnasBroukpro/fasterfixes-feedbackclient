@@ -31,10 +31,28 @@ export const getMrr = adminProcedure.query(async () => {
         // unit_amount is per seat; multiply by quantity or seat-based plans
         // (e.g. 5-seat Agency) are counted as a single seat and MRR collapses.
         const quantity = item.quantity ?? 1;
-        let monthlyAmount = price.unit_amount * quantity;
+        const periodAmount = price.unit_amount * quantity;
 
-        if (price.recurring?.interval === "year") {
-          monthlyAmount = monthlyAmount / 12;
+        // Normalize every billing cadence to a monthly figure. interval_count
+        // matters: a "every 3 months" price bills periodAmount per quarter, so
+        // its MRR is periodAmount / 3 — not periodAmount.
+        const interval = price.recurring?.interval;
+        const intervalCount = price.recurring?.interval_count ?? 1;
+        let monthlyAmount: number;
+        switch (interval) {
+          case "year":
+            monthlyAmount = periodAmount / (12 * intervalCount);
+            break;
+          case "week":
+            monthlyAmount = (periodAmount * 52) / 12 / intervalCount;
+            break;
+          case "day":
+            monthlyAmount = (periodAmount * 365) / 12 / intervalCount;
+            break;
+          case "month":
+          default:
+            monthlyAmount = periodAmount / intervalCount;
+            break;
         }
 
         totalMrrCents += monthlyAmount;
@@ -47,21 +65,35 @@ export const getMrr = adminProcedure.query(async () => {
     }
   }
 
-  // Gross = money charged to customers; net = what actually lands after Stripe
-  // fees and refunds. `net` alone (the previous behaviour) under-reports the
-  // headline figure, and `limit: 100` silently capped the sum at 100 charges —
-  // auto-pagination walks the full history instead.
+  // Gross = money charged to customers; net = what lands after Stripe fees and
+  // refunds. Both must be gated to revenue-bearing transaction types: a payout
+  // to the bank is itself a balance transaction with negative `net`, so summing
+  // every type cancelled each charge against its later payout and net collapsed
+  // to roughly the un-paid-out (recent) balance. `txn.net` already nets the
+  // Stripe fee out of a charge, so summing net over these types yields true net
+  // revenue without double-counting fees. `limit: 100` is the page size; the
+  // `for await` auto-paginates the full history rather than capping at 100.
+  const grossTypes = new Set(["charge", "payment"]);
+  const netRevenueTypes = new Set([
+    "charge",
+    "payment",
+    "refund",
+    "payment_refund",
+    "payment_failure_refund",
+    "adjustment", // disputes / chargebacks
+  ]);
   let grossRevenueCents = 0;
   let netRevenueCents = 0;
   try {
     for await (const txn of stripeApi.balanceTransactions.list({
       limit: 100,
     })) {
-      if (txn.type === "charge" || txn.type === "payment") {
+      if (grossTypes.has(txn.type)) {
         grossRevenueCents += txn.amount;
       }
-      // net nets out fees for charges and subtracts refunds/chargebacks.
-      netRevenueCents += txn.net;
+      if (netRevenueTypes.has(txn.type)) {
+        netRevenueCents += txn.net;
+      }
     }
   } catch (error) {
     console.error("Failed to fetch Stripe balance transactions:", error);
