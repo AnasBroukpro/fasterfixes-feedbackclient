@@ -65,14 +65,18 @@ export async function updateFeedbackStatus(
     `[agent-api] feedbacks:update_status tokenId=${agentToken.id} feedbackId=${feedback.id} ${previousStatus} -> ${parsed.data.status}`,
   );
 
-  // Fire-and-forget: sync status to GitHub if linked.
-  inngest
-    .send({
-      name: "feedback/status-changed",
-      // actor "agent": this endpoint is only reachable with an agent token.
-      data: { feedbackId: feedback.id, newStatus: parsed.data.status, actor: "agent" },
-    })
-    .catch(() => {});
+  // Fire-and-forget: sync status to GitHub if linked. Skip on no-op — a
+  // redundant status set (common when an agent loops over a queue) shouldn't
+  // re-fan-out to external trackers, which is the costly part of a write.
+  if (parsed.data.status !== previousStatus) {
+    inngest
+      .send({
+        name: "feedback/status-changed",
+        // actor "agent": this endpoint is only reachable with an agent token.
+        data: { feedbackId: feedback.id, newStatus: parsed.data.status, actor: "agent" },
+      })
+      .catch(() => {});
+  }
 
   return NextResponse.json({
     id: updated.id,
