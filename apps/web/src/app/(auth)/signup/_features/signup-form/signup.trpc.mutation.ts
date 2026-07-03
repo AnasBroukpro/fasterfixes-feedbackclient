@@ -9,9 +9,9 @@ import { SignupSchema } from "./signup.schema";
 export const signupMutation = publicProcedure
   .input(SignupSchema)
   .mutation(async ({ input }) => {
-    const userCount = await prisma.user.count();
+    const adminCount = await prisma.user.count({ where: { role: "admin" } });
 
-    if (userCount > 0) {
+    if (adminCount > 0) {
       throw new TRPCError({
         code: "FORBIDDEN",
         message: "Public signup is disabled. Contact your administrator.",
