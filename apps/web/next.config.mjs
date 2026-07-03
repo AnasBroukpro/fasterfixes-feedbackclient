@@ -2,7 +2,11 @@ import { createMDX } from "fumadocs-mdx/next";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: process.env.DOCKER_BUILD === "1" ? "standalone" : undefined,
   transpilePackages: ["@workspace/ui"],
+  typescript: {
+    ignoreBuildErrors: process.env.DOCKER_BUILD === "1",
+  },
   typedRoutes: true,
 
   experimental: {

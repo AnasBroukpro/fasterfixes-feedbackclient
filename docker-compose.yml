@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: fasterfixes
+      POSTGRES_PASSWORD: fasterfixes
+      POSTGRES_DB: fasterfixes
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fasterfixes"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://fasterfixes:fasterfixes@db:5432/fasterfixes?schema=public
+      DOMAIN_NAME: localhost
+      BASE_URL: http://localhost:3000
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-dev-secret-change-in-production-32chars}
+      BETTER_AUTH_URL: http://localhost:3000
+      NEXT_PUBLIC_FF_API_KEY: ${FF_API_KEY:-ff_dev_key}
+      NEXT_PUBLIC_FF_API_ORIGIN: http://localhost:3000
+      NEXT_PUBLIC_IS_CLOUD: "false"
+      NODE_ENV: production
+      # Placeholder env vars for integrations (set real values in production)
+      STORAGE_BUCKET_NAME: placeholder
+      R2_ACCOUNT_ID: placeholder
+      R2_ACCESS_KEY_ID: placeholder
+      R2_SECRET_ACCESS_KEY: placeholder
+      GITHUB_APP_ID: placeholder
+      GITHUB_PRIVATE_KEY: placeholder
+      LINEAR_TOKEN_ENCRYPTION_KEY: 78268a883eb9988c7742dd0b87570b4fb26e5068e356c25a92b4913e33ba9aa1
+      SLACK_TOKEN_ENCRYPTION_KEY: 78268a883eb9988c7742dd0b87570b4fb26e5068e356c25a92b4913e33ba9aa1
+      RESEND_API_KEY: re_placeholder
+      STRIPE_WEBHOOK_SIGNING_SECRET: whsec_placeholder
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
