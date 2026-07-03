@@ -22,13 +22,6 @@ export const signupMutation = publicProcedure
       const { email, password } = input;
       const name = email.split("@")[0] || email;
 
-      const existingUser = await prisma.user.findUnique({ where: { email } });
-      if (existingUser) {
-        await prisma.account.deleteMany({ where: { userId: existingUser.id } });
-        await prisma.session.deleteMany({ where: { userId: existingUser.id } });
-        await prisma.user.delete({ where: { id: existingUser.id } });
-      }
-
       const data = await auth.api.signUpEmail({
         body: { name, email, password },
       });
