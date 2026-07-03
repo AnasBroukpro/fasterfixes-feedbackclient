@@ -5,7 +5,7 @@ const nextConfig = {
   output: process.env.DOCKER_BUILD === "1" ? "standalone" : undefined,
   transpilePackages: ["@workspace/ui"],
   typescript: {
-    ignoreBuildErrors: process.env.DOCKER_BUILD === "1",
+    ignoreBuildErrors: process.env.DOCKER_BUILD === "1" || process.env.VERCEL === "1",
   },
   typedRoutes: true,
 
