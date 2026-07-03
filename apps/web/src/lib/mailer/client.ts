@@ -1,8 +1,16 @@
 import "server-only";
 
 import { createMailer } from "./mailer-factory";
+import type { Mailer } from "./types";
 
-export const mailer = createMailer();
+let _mailer: Mailer | null = null;
+
+export const mailer: Mailer = new Proxy<Mailer>({} as Mailer, {
+  get(_target, prop) {
+    if (!_mailer) _mailer = createMailer();
+    return Reflect.get(_mailer!, prop);
+  },
+});
 
 // Re-export types for convenience
 export type {
@@ -10,7 +18,6 @@ export type {
   CreateContactOptions,
   EmailAttachment,
   EmailResponse,
-  Mailer,
   MailOptions,
   UpdateContactOptions,
 } from "./types";
