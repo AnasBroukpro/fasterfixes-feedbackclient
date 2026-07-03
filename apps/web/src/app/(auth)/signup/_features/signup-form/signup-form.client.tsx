@@ -1,6 +1,5 @@
 "use client";
 
-import { SendVerificationEmailButton } from "@/app/_features/auth/send-verification-email-button/send-verification-email-button.client";
 import { useTRPC } from "@/lib/trpc/trpc-client";
 import { useMutation } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -57,25 +56,16 @@ export function SignupForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {/* Success Message */}
         {success && (
           <Alert variant="success">
             <CheckCircleIcon />
             <AlertTitle>Success</AlertTitle>
             <AlertDescription>
-              <p>A confirmation email has been sent to your address.</p>
-              <SendVerificationEmailButton
-                email={form.getValues("email")}
-                size="sm"
-                className="mt-2"
-              >
-                Resend confirmation email
-              </SendVerificationEmailButton>
+              <p>Account created. You can now sign in.</p>
             </AlertDescription>
           </Alert>
         )}
 
-        {/* Server Error */}
         {form.formState.errors.root && (
           <Alert variant="destructive">
             <AlertCircleIcon />
@@ -86,7 +76,6 @@ export function SignupForm() {
           </Alert>
         )}
 
-        {/* Email Field */}
         <FormField
           control={form.control}
           name="email"
@@ -106,7 +95,6 @@ export function SignupForm() {
           )}
         />
 
-        {/* Password Field */}
         <FormField
           control={form.control}
           name="password"
@@ -144,14 +132,13 @@ export function SignupForm() {
           )}
         />
 
-        {/* Submit Button */}
         <Button
           type="submit"
           className="w-full"
           disabled={signupMutation.isPending}
           size="lg"
         >
-          {signupMutation.isPending ? "Creating account..." : "Sign up"}
+          {signupMutation.isPending ? "Creating account..." : "Create admin account"}
         </Button>
       </form>
     </Form>

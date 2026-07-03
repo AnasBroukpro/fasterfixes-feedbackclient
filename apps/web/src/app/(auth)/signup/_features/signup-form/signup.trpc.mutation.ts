@@ -3,22 +3,26 @@
 import { auth } from "@/server/auth";
 import { publicProcedure } from "@/server/trpc/trpc";
 import { inferProcedureOutput, TRPCError } from "@trpc/server";
+import { prisma } from "@workspace/db";
 import { SignupSchema } from "./signup.schema";
 
 export const signupMutation = publicProcedure
   .input(SignupSchema)
   .mutation(async ({ input }) => {
+    const userCount = await prisma.user.count();
+
+    if (userCount > 0) {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "Public signup is disabled. Contact your administrator.",
+      });
+    }
+
     try {
       const { email, password } = input;
-
-      // Call the better-auth signup method
       const name = email.split("@")[0] || email;
       const data = await auth.api.signUpEmail({
-        body: {
-          name,
-          email,
-          password,
-        },
+        body: { name, email, password },
       });
 
       if (!data) {
@@ -28,6 +32,11 @@ export const signupMutation = publicProcedure
         });
       }
 
+      await prisma.user.update({
+        where: { id: data.user.id },
+        data: { role: "admin" },
+      });
+
       return data.user;
     } catch (error) {
       console.error(error);
@@ -36,7 +45,6 @@ export const signupMutation = publicProcedure
         throw error;
       }
 
-      // Handle duplicate email
       if (error instanceof Error && error.message.includes("email")) {
         throw new TRPCError({
           code: "CONFLICT",

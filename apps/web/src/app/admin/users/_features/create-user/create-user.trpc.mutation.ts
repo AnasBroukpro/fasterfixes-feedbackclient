@@ -11,17 +11,14 @@ export const createUser = adminProcedure
   .input(CreateUserSchema)
   .mutation(async ({ input }) => {
     try {
-      // Generate a secure random password (user will reset it later)
-      const randomPassword = randomBytes(16).toString("hex");
+      // Generate a secure random password for the user
+      const temporaryPassword = randomBytes(16).toString("hex");
 
-      // Use Better Auth to create the user
-      // This atomically creates User + Account and triggers database hooks
-      // (which create MarketingPreferences + default Organization)
       const data = await auth.api.signUpEmail({
         body: {
           name: input.name,
           email: input.email,
-          password: randomPassword,
+          password: temporaryPassword,
         },
       });
 
@@ -34,7 +31,6 @@ export const createUser = adminProcedure
 
       const userId = data.user.id;
 
-      // Create or update profile with firstName/lastName if provided
       if (input.firstName || input.lastName) {
         await prisma.profile.upsert({
           where: { userId },
@@ -54,6 +50,7 @@ export const createUser = adminProcedure
         userId: data.user.id,
         email: data.user.email,
         name: data.user.name,
+        temporaryPassword,
       };
     } catch (error) {
       console.error("[createUser] Error:", error);

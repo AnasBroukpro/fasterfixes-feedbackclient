@@ -1,3 +1,4 @@
+import { signupUrl } from "@/app/_constants/routes";
 import { auth } from "@/server/auth";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
@@ -23,7 +24,10 @@ export default async function SignupPage() {
       <div className="w-full max-w-sm">
         <div className="space-y-6">
           <div className="space-y-2 text-center">
-            <h1 className="text-2xl font-bold">Create your account</h1>
+            <h1 className="text-2xl font-bold">Create your first account</h1>
+            <p className="text-muted-foreground text-sm">
+              This will be the administrator account.
+            </p>
           </div>
 
           <SignupForm />

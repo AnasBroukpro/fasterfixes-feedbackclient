@@ -6,7 +6,7 @@ import { admin, lastLoginMethod } from "better-auth/plugins";
 import { after } from "next/server";
 import { databaseHooks } from "./config/database-hooks";
 import { emailAndPassword } from "./config/email-and-password";
-import { emailVerification } from "./config/email-verification";
+
 import { customSessionPlugin } from "./plugins/custom-session";
 import { organizationPlugin } from "./plugins/organization";
 import { stripePlugin } from "./plugins/stripe";
@@ -20,14 +20,13 @@ export const auth = betterAuth({
     `https://www.${process.env.DOMAIN_NAME}`,
   ],
   emailAndPassword,
-  emailVerification,
   databaseHooks,
   rateLimit: {
     enabled: true,
     storage: "database",
     customRules: {
       "/api/auth/sign-in/email": { window: 60, max: 5 },
-      "/api/auth/sign-up/email": { window: 60, max: 3 },
+
       "/api/auth/change-password": { window: 60, max: 3 },
     },
   },

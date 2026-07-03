@@ -14,66 +14,79 @@ import {
   AlertDialogTrigger,
 } from "@workspace/ui/components/alert-dialog";
 import { Button } from "@workspace/ui/components/button";
+import { Input } from "@workspace/ui/components/input";
+import { Label } from "@workspace/ui/components/label";
+import { useState } from "react";
 import { toast } from "sonner";
 
-type RequestPasswordResetButtonProps = {
+type ResetUserPasswordButtonProps = {
   userId: string;
 };
 
 export const RequestPasswordResetButton = ({
   userId,
-}: RequestPasswordResetButtonProps) => {
+}: ResetUserPasswordButtonProps) => {
   const trpc = useTRPC();
-  const requestPasswordResetMutation =
-    useMutation(trpc.admin.users.password.requestReset.mutationOptions({
+  const [newPassword, setNewPassword] = useState("");
+
+  const mutation = useMutation(
+    trpc.admin.users.password.requestReset.mutationOptions({
       onSuccess: () => {
         toast.success("Success", {
-          description:
-            "A password reset email has been sent to the user",
+          description: "Password has been updated",
         });
+        setNewPassword("");
       },
       onError: (error) => {
         toast.error("Error", {
-          description:
-            error.message ||
-            "Failed to send password reset link",
+          description: error.message || "Failed to update password",
         });
       },
-    }));
+    }),
+  );
 
-  const handleRequestReset = () => {
-    requestPasswordResetMutation.mutate({ userId });
+  const handleSetPassword = () => {
+    if (newPassword.length < 8) {
+      toast.error("Password must be at least 8 characters");
+      return;
+    }
+    mutation.mutate({ userId, newPassword });
   };
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button
-          variant="outline"
-          disabled={requestPasswordResetMutation.isPending}
-        >
-          Reset password
-        </Button>
+        <Button variant="outline">Reset password</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            Send a password reset link?
-          </AlertDialogTitle>
+          <AlertDialogTitle>Set a new password</AlertDialogTitle>
           <AlertDialogDescription>
-            An email with a password reset link will be sent to the user. The
-            user will then be able to create a new password.
+            Enter a new password for this user. They will use this to sign in.
           </AlertDialogDescription>
         </AlertDialogHeader>
+
+        <div className="space-y-2">
+          <Label htmlFor="new-password">New password</Label>
+          <Input
+            id="new-password"
+            type="text"
+            placeholder="••••••••••••"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            disabled={mutation.isPending}
+          />
+        </div>
+
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel onClick={() => setNewPassword("")}>
+            Cancel
+          </AlertDialogCancel>
           <AlertDialogAction
-            onClick={handleRequestReset}
-            disabled={requestPasswordResetMutation.isPending}
+            onClick={handleSetPassword}
+            disabled={mutation.isPending || newPassword.length < 8}
           >
-            {requestPasswordResetMutation.isPending
-              ? "Sending..."
-              : "Send"}
+            {mutation.isPending ? "Saving..." : "Set password"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

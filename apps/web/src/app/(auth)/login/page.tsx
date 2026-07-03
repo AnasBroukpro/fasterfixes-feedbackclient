@@ -1,8 +1,6 @@
-import { signupUrl } from "@/app/_constants/routes";
 import { auth } from "@/server/auth";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { LoginForm } from "./_features/login-form/login-form.client";
@@ -31,18 +29,6 @@ export default async function LoginPage() {
           <Suspense>
             <LoginForm />
           </Suspense>
-
-          <div className="text-center text-sm">
-            <span className="text-muted-foreground">
-              Don&apos;t have an account?{" "}
-            </span>
-            <Link
-              href={signupUrl}
-              className="text-primary font-medium hover:underline"
-            >
-              Sign up
-            </Link>
-          </div>
         </div>
       </div>
     </div>
